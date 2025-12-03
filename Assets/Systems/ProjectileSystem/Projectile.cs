@@ -1,0 +1,64 @@
+using UnityEngine;
+
+public class Projectile : MonoBehaviour
+{
+    private ProjectileConfigSO config;
+
+    private ProjectileRuntimeStats currentStats;
+    private Vector2 direction;
+    private Vector2 startPos;
+    private float timeAlive;
+
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+
+    public System.Action<Projectile> OnDespawn; // callback dla poola
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+    }
+
+    public void Init(ProjectileConfigSO cfg, Vector2 dir, ProjectileRuntimeStats stats)
+{
+    config = cfg;
+    direction = dir.normalized;
+    timeAlive = 0f;
+    startPos = transform.position;
+
+    currentStats = stats;
+
+    sr.sprite = cfg.sprite;
+    transform.localScale = cfg.spriteScale;
+
+    rb.linearVelocity= direction * currentStats.speed;
+}
+
+
+    void Update()
+    {
+        timeAlive += Time.deltaTime;
+
+        if (config.rotateToVelocity)
+            transform.right = rb.linearVelocity;
+
+        if (timeAlive >= currentStats.lifetime)
+         Despawn();
+
+        if (Vector2.Distance(startPos, transform.position) >= currentStats.maxDistance)
+        Despawn();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // #TODO: damage system later
+        Despawn();
+    }
+
+    private void Despawn()
+    {
+        rb.linearVelocity = Vector2.zero;
+        OnDespawn?.Invoke(this);
+    }
+}
