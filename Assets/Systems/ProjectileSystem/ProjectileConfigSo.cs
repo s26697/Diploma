@@ -3,9 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ProjectileConfig", menuName = "Weapons/Projectile")]
 public class ProjectileConfigSO : ScriptableObject
 {
-    [Header("Visual")]
-    public Sprite sprite;
-    public Vector2 spriteScale = Vector2.one;
+    [Header("Prefab")]
+    
+    public Projectile prefab;
 
     [Header("Stats")]
     public float speed = 10f;

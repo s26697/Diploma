@@ -1,31 +1,33 @@
 using UnityEngine;
 
-public class ProjectileFactory : MonoBehaviour
+public class ProjectileFactory 
 {
-    [SerializeField] private Projectile projectilePrefab;
-    [SerializeField] private int poolSize = 50;
-
+    
+    private int poolSize = 50;
     private ProjectilePool pool;
 
-    void Awake()
+     public ProjectileFactory( int PoolSize = 50)
     {
-        pool = new ProjectilePool(projectilePrefab, poolSize, transform);
-    }
+        this.poolSize = PoolSize;
 
-    public void Spawn(ProjectileConfigSO config, 
-        IStatOwner owner, 
-        Vector2 position, 
-        Vector2 direction)
+    }
+    
+
+    public void Spawn(ProjectileConfigSO config, IStatOwner owner, Vector2 position, Vector2 direction)
     {
+        if(pool == null)
+        {
+            pool = new ProjectilePool(config.prefab,poolSize);
+        }
         // #todo dodać statystyki z których korzysta z statsystemu
         ProjectileRuntimeStats stats = new ProjectileRuntimeStats
         {
-            /*
-            speed = config.speed * owner.GetStat(StatType.ProjectileSpeed),
-            maxDistance = config.maxDistance * owner.GetStat(StatType.Range),
-            damage = config.damage * owner.GetStat(StatType.DamageMultiplier),
-            lifetime = config.lifetime * owner.GetStat(StatType.ProjectileLifetime)
-            */
+            
+            speed = config.speed, //* owner.GetStat(StatType.ProjectileSpeed),
+            maxDistance = config.maxDistance, //* owner.GetStat(StatType.Range),
+            damage = config.damage, //* owner.GetStat(StatType.DamageMultiplier),
+            lifetime = config.lifetime //* owner.GetStat(StatType.ProjectileLifetime)
+            
         };
 
         

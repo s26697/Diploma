@@ -17,7 +17,6 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
     }
 
     public void Init(ProjectileConfigSO cfg, Vector2 dir, ProjectileRuntimeStats stats)
@@ -28,9 +27,6 @@ public class Projectile : MonoBehaviour
     startPos = transform.position;
 
     currentStats = stats;
-
-    sr.sprite = cfg.sprite;
-    transform.localScale = cfg.spriteScale;
 
     rb.linearVelocity= direction * currentStats.speed;
 }
