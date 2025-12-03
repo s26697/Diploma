@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5393642865145430046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5098266052896089585}
+  m_Layer: 0
+  m_Name: muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5098266052896089585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393642865145430046}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.41, y: 0.38, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4066941391136067472}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7715227133929763726
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +134,7 @@ GameObject:
   - component: {fileID: 4454699199830284364}
   - component: {fileID: 7704716902139054900}
   - component: {fileID: 5883233243679623350}
+  - component: {fileID: 8105098799969750617}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -208,8 +240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e4f1e99ad814b968d72ee5a58a30a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _speed: 7
-  _dashSpeed: 15
   _dashDuration: 0.2
   _dashCooldown: 1
   mySpriteRender: {fileID: 2680885455184750325}
@@ -226,6 +256,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatOwner
   definition: {fileID: 11400000, guid: a95bb4e664bd8582391e0bf9aaa4c0b8, type: 2}
+--- !u!114 &8105098799969750617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642511180446704187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5a7546a7b181a7ea2783fe2ef4bdbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSystem
+  _weaponConfig: {fileID: 11400000, guid: 5ebb38a89cd80c0458d7e2d8aed5f93b, type: 2}
+  _muzzle: {fileID: 5098266052896089585}
 --- !u!1 &8666988415169486323
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +300,8 @@ Transform:
   m_LocalPosition: {x: 0.56, y: -2.12, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5098266052896089585}
   m_Father: {fileID: 4130210247714543408}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1034276539405163765
@@ -305,7 +350,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1259905345474778919, guid: 17d7cea498d6efa468793020b749db37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

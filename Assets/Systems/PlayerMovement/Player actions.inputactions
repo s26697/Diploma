@@ -93,10 +93,10 @@
                 {
                     "name": "",
                     "id": "71c00cc6-0733-4d32-a803-60500228ff4f",
-                    "path": "",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";pc-keyboard-mouse",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false

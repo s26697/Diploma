@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private Playeractions controls;
     private Rigidbody2D _rigidbody;
 
+    private WeaponSystem _weaponSystem;
+
     private Vector2 _movementInput;
     private bool _isDashing = false;
     private float _dashTime = 0f;
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
         controls = new Playeractions();
         _rigidbody = GetComponent<Rigidbody2D>();
         _statOwner = GetComponent<StatOwner>();
+        _weaponSystem = GetComponent<WeaponSystem>();
     }
 
     private void OnEnable() => controls.Player.Enable();
@@ -53,6 +56,17 @@ public class PlayerController : MonoBehaviour
         // Dash input is checked in Update() for responsiveness
         if (controls.Player.Dash.triggered)
             TryStartDash();
+
+             
+        // Continuous attack input
+    if (controls.Player.Fire.ReadValue<float>() > 0f) // przytrzymanie przycisku
+    {
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mouseWorldPos.z = 0f;
+        Vector2 direction = (mouseWorldPos - transform.position).normalized;
+
+        _weaponSystem.Attack(direction);
+    }
     }
 
     
