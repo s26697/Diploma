@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-
-
-
 [CreateAssetMenu(fileName = "NewStatDefinition", menuName = "Stats/StatDefinition")]
 public class StatDefinitionSO : ScriptableObject
 {

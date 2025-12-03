@@ -7,10 +7,11 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController Instance;
 
+    private StatOwner _statOwner;
 
     [Header("Movement Settings")]
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _dashSpeed = 15f;
+    
+    //[SerializeField] private float _dashSpeed = 15f; // #TODO dodać do statsystemu, i cant be bothered atm
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 1f;
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
         controls = new Playeractions();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _statOwner = GetComponent<StatOwner>();
     }
 
     private void OnEnable() => controls.Player.Enable();
@@ -62,7 +64,9 @@ public class PlayerController : MonoBehaviour
     
     private void MovePlayer()
     {
-        float currentSpeed = _isDashing ? _dashSpeed : _speed;
+        var _speed =_statOwner.GetStat(StatType.MoveSpeed);
+        
+        float currentSpeed = _isDashing ? _speed * 3 : _speed; //#todo może custom dashspeed czy coś na razie hardcode. idc
         Vector2 move = _movementInput.normalized * currentSpeed * Time.fixedDeltaTime;
 
         _rigidbody.MovePosition(_rigidbody.position + move);
