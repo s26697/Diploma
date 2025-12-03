@@ -514,6 +514,7 @@ GameObject:
   - component: {fileID: 873640660}
   - component: {fileID: 873640659}
   - component: {fileID: 873640661}
+  - component: {fileID: 873640662}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -624,6 +625,19 @@ MonoBehaviour:
   _dashDuration: 0.2
   _dashCooldown: 1
   mySpriteRender: {fileID: 1464866370}
+--- !u!114 &873640662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873640654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0adb4ec0c318165bb4e579fbfbfdf7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatOwner
+  definition: {fileID: 0}
 --- !u!1 &1190000997
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,9 +11,3 @@ public enum StatType
     CritChance,
     CritDamage
 }
-
-public enum StatModType
-{
-    Additive,
-    Multiplicative
-}

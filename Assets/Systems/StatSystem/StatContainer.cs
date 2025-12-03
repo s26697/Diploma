@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class StatContainer
 {
     private readonly Dictionary<StatType, List<StatModifier>> _mods = new();
@@ -9,6 +11,8 @@ public class StatContainer
 
         _mods[type].Add(mod);
     }
+
+    
 
     public float GetFinalValue(StatType stat, float baseValue)
     {
@@ -23,7 +27,7 @@ public class StatContainer
             if (m.Type == StatModType.Additive)
                 add += m.Value;
             else
-                mult *= 1 + m.Value;
+                mult *= (1 + m.Value);
         }
 
         return (baseValue + add) * mult;

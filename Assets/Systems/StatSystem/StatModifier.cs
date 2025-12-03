@@ -1,7 +1,8 @@
+
 public class StatModifier
 {
     public readonly float Value;
-    public readonly StatModType Type; // additive / multiplayer
+    public readonly StatModType Type;
 
     public StatModifier(float value, StatModType type)
     {
