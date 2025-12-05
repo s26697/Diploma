@@ -67,6 +67,13 @@ public class PlayerController : MonoBehaviour
 
         _weaponSystem.Attack(direction);
     }
+
+    // Spawn enemy on input
+    if (controls.Player.Spawn.triggered) //#todo 
+    {
+        Vector2 pos = transform.position + transform.up * 3f; 
+        GameEvents.RaiseRequestSpawnEnemy(pos);
+    }
     }
 
     
