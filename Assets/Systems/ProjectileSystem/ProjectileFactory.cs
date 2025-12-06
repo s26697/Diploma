@@ -13,7 +13,7 @@ public class ProjectileFactory
     }
     
 
-    public void Spawn(ProjectileConfigSO config, IStatOwner owner, Vector2 position, Vector2 direction)
+    public void Spawn(ProjectileConfigSO config, IStatOwner owner, Vector2 position, Vector2 direction, IDamaging source)
     {
         if(pool == null)
         {
@@ -33,6 +33,6 @@ public class ProjectileFactory
         
         Projectile p = pool.Get();
         p.transform.position = position;
-        p.Init(config, direction, stats);
+        p.Init(config, direction, stats, source);
     }
 }

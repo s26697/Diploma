@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Weapon
@@ -70,7 +71,7 @@ public class Weapon
         
        // direction = handleAccuracy();
 
-        _projectileFactory.Spawn(_config.projectileConfig, _stats, origin, direction);
+        _projectileFactory.Spawn(_config.projectileConfig, _stats, origin, direction, this); // #todo player a nie bron ale whatever
 
         _cooldown = 1f / GetEffectiveAttackSpeed();
     }

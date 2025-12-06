@@ -1,38 +1,44 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IDamaging
 {
     private ProjectileConfigSO config;
-
     private ProjectileRuntimeStats currentStats;
+
     private Vector2 direction;
     private Vector2 startPos;
     private float timeAlive;
 
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
 
-    public System.Action<Projectile> OnDespawn; // callback dla poola
+    private IDamaging source; 
 
-    void Awake()
+    public System.Action<Projectile> OnDespawn;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(ProjectileConfigSO cfg, Vector2 dir, ProjectileRuntimeStats stats)
-{
-    config = cfg;
-    direction = dir.normalized;
-    timeAlive = 0f;
-    startPos = transform.position;
+    public void Init(ProjectileConfigSO cfg, Vector2 dir, ProjectileRuntimeStats stats, IDamaging source)
+    {
+        config = cfg;
+        direction = dir.normalized;
+        timeAlive = 0f;
+        startPos = transform.position;
+        this.source = source;
 
-    currentStats = stats;
+        currentStats = stats;
 
-    rb.linearVelocity= direction * currentStats.speed;
-}
+        rb.linearVelocity = direction * currentStats.speed;
+    }
 
+    public DamageInfo GetDamage()
+    {
+        return new DamageInfo(currentStats.damage, source);
+    }
 
-    void Update()
+    private void Update()
     {
         timeAlive += Time.deltaTime;
 
@@ -40,16 +46,19 @@ public class Projectile : MonoBehaviour
             transform.right = rb.linearVelocity;
 
         if (timeAlive >= currentStats.lifetime)
-         Despawn();
+            Despawn();
 
         if (Vector2.Distance(startPos, transform.position) >= currentStats.maxDistance)
-        Despawn();
+            Despawn();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // #TODO: damage system later
-        Despawn();
+        if (other.TryGetComponent<IDamageable>(out var dmg))
+        {
+            dmg.ApplyDamage(GetDamage());
+            Despawn();
+        }
     }
 
     private void Despawn()
