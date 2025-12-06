@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[RequireComponent(typeof(ResourceHealth))]
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     private ResourceHealth health;
@@ -10,13 +10,19 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         stats = GetComponent<StatOwner>();
         health = GetComponent<ResourceHealth>();
 
-        health.Init(() => stats.GetStat(StatType.MaxHP));
+        
 
         health.OnHealthZero += Die;
     }
 
+    private void Start()
+    {
+        health.Init(() => stats.GetStat(StatType.MaxHP));
+    }
+
     public void ApplyDamage(DamageInfo dmg)
     {
+         if (health == null) return;
         health.ApplyDamage(dmg.Amount);
         Debug.Log($"PLAYER HIT for {dmg.Amount}");
     }
