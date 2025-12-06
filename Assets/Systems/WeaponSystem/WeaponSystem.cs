@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(IStatOwner))]
 public class WeaponSystem : MonoBehaviour
 {
     [SerializeField] private WeaponConfigSO _weaponConfig;

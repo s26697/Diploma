@@ -1,131 +1,101 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-
     public static PlayerController Instance;
 
-    private StatOwner _statOwner;
-
-    [Header("Movement Settings")]
-    
-    //[SerializeField] private float _dashSpeed = 15f; // #TODO dodać do statsystemu, i cant be bothered atm
-    [SerializeField] private float _dashDuration = 0.2f;
-    [SerializeField] private float _dashCooldown = 1f;
-
-    public SpriteRenderer mySpriteRender;
-
     private Playeractions controls;
-    private Rigidbody2D _rigidbody;
+    private WeaponSystem weapon;
+    private StatOwner stats;
+    private bool isFiring = false;
 
-    private WeaponSystem _weaponSystem;
-
-    private Vector2 _movementInput;
-    private bool _isDashing = false;
-    private float _dashTime = 0f;
-    private float _lastDashTime = -10f;
-    
+    private PlayerMovementController movementController;
+    private PlayerDashController dashController;
 
     private void Awake()
     {
-        if ( Instance == null) {
-            Instance = this;
-        }else if (Instance != this){
-            Destroy(this);
-        }
+        InitSingleton();
 
         controls = new Playeractions();
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _statOwner = GetComponent<StatOwner>();
-        _weaponSystem = GetComponent<WeaponSystem>();
+        stats = GetComponent<StatOwner>();
+        weapon = GetComponent<WeaponSystem>();
+
+        movementController = new PlayerMovementController(GetComponent<Rigidbody2D>(), stats);
+        dashController = new PlayerDashController();
+
+        BindInputCallbacks();
     }
 
-    private void OnEnable() => controls.Player.Enable();
-    private void OnDisable() => controls.Player.Disable();
-    private void FixedUpdate()
+    private void InitSingleton()
     {
-        ReadInput();
-        MovePlayer();
-        AdjustPlayerFacingDirection();
+        if (Instance == null) Instance = this;
+        else if (Instance != this) Destroy(gameObject);
     }
+
+    private void BindInputCallbacks()
+    {
+        // DASH INPUT (event-driven)
+        controls.Player.Dash.started += _ => dashController.TryStartDash(movementController.MoveInput);
+
+        controls.Player.Fire.performed += _ => isFiring = true;
+        controls.Player.Fire.canceled  += _ => isFiring = false;
+
+        // MOVEMENT INPUT
+        controls.Player.Move.performed += ctx => 
+            movementController.SetMovementInput(ctx.ReadValue<Vector2>());
+        controls.Player.Move.canceled += _ => 
+            movementController.SetMovementInput(Vector2.zero);
+
+        // DEBUG SPAWN
+        controls.Player.Spawn.started += _ => SpawnDebugEnemy();
+    }
+
+    private void OnEnable() => controls.Enable();
+    private void OnDisable() => controls.Disable();
 
     private void Update()
     {
-        // Dash input is checked in Update() for responsiveness
-        if (controls.Player.Dash.triggered)
-            TryStartDash();
-
-             
-        // Continuous attack input
-    if (controls.Player.Fire.ReadValue<float>() > 0f) // przytrzymanie przycisku
-    {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        mouseWorldPos.z = 0f;
-        Vector2 direction = (mouseWorldPos - transform.position).normalized;
-
-        _weaponSystem.Attack(direction);
+        dashController.UpdateDashTimer();
+        movementController.UpdateFacing(GetMouseWorldPos());
+        HandleContinuousFire();
     }
 
-    // Spawn enemy on input
-    if (controls.Player.Spawn.triggered) //#todo 
+    private void HandleContinuousFire()
+{
+    if (!isFiring) return;
+    AttackInput();
+}
+
+
+    private void FixedUpdate()
     {
-        Vector2 pos = transform.position + transform.up * 3f; 
+        movementController.Move(dashController.IsDashing);
+    }
+
+    // -------------------------------------------------------
+    // Helper Methods
+    // -------------------------------------------------------
+
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        pos.z = 0;
+        return pos;
+    }
+
+    private void AttackInput()
+    {
+        Vector3 mouse = GetMouseWorldPos();
+        Vector2 dir = (mouse - transform.position).normalized;
+        weapon.Attack(dir);
+    }
+
+    private void SpawnDebugEnemy()
+    {
+        Vector2 pos = (Vector2)(transform.position + (transform.up * 3f));
         GameEvents.RaiseRequestSpawnEnemy(pos);
     }
-    }
-
-    
-    private void ReadInput()
-    {
-        _movementInput = controls.Player.Move.ReadValue<Vector2>();
-    }
-
-    
-    private void MovePlayer()
-    {
-        var _speed =_statOwner.GetStat(StatType.MoveSpeed);
-        
-        float currentSpeed = _isDashing ? _speed * 3 : _speed; //#todo może custom dashspeed czy coś na razie hardcode. idc
-        Vector2 move = _movementInput.normalized * currentSpeed * Time.fixedDeltaTime;
-
-        _rigidbody.MovePosition(_rigidbody.position + move);
-
-        if (_isDashing)
-        {
-            _dashTime -= Time.fixedDeltaTime;
-            if (_dashTime <= 0f)
-                _isDashing = false;
-        }
-    }
-
-    
-    private void TryStartDash()
-    {
-        if (_movementInput == Vector2.zero) return; 
-        if (Time.time < _lastDashTime + _dashCooldown) return; 
-
-        _isDashing = true;
-        _dashTime = _dashDuration;
-        _lastDashTime = Time.time;
-    }
-
-     private void AdjustPlayerFacingDirection()
-    {
-    
-    Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-    mouseWorldPos.z = 0f;
-
-    Vector3 scale = transform.localScale;
-
-    if (mouseWorldPos.x < transform.position.x)
-        scale.x = -Mathf.Abs(scale.x); 
-    else
-        scale.x = Mathf.Abs(scale.x);  
-
-    transform.localScale = scale;
-    }
-
-
 }

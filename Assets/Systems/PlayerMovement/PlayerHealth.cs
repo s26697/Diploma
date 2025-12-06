@@ -1,5 +1,7 @@
 using UnityEngine;
+
 [RequireComponent(typeof(ResourceHealth))]
+[RequireComponent(typeof(StatOwner))]
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     private ResourceHealth health;
@@ -10,19 +12,28 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         stats = GetComponent<StatOwner>();
         health = GetComponent<ResourceHealth>();
 
-        
-
-        health.OnHealthZero += Die;
+        BindEvents();
     }
 
     private void Start()
+    {
+        InitializeHealth();
+    }
+
+    private void BindEvents()
+    {
+        health.OnHealthZero += Die;
+    }
+
+    private void InitializeHealth()
     {
         health.Init(() => stats.GetStat(StatType.MaxHP));
     }
 
     public void ApplyDamage(DamageInfo dmg)
     {
-         if (health == null) return;
+        if (dmg.Amount <= 0) return;
+
         health.ApplyDamage(dmg.Amount);
         Debug.Log($"PLAYER HIT for {dmg.Amount}");
     }
@@ -30,5 +41,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private void Die()
     {
         Debug.Log("PLAYER DEAD");
+        // #TODO dodac i obsluzyc even RaisePlayerDied();
     }
 }
