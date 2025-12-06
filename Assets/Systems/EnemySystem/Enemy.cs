@@ -11,10 +11,12 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
     public StatOwner Stats { get; private set; }
     public EnemyConfigSO Config { get; private set; }
 
+    public GameObject source => gameObject;
+
     public System.Action<Enemy> OnDespawn;
 
     private IEnemyStrategy strategy;
-    private Transform target;
+    
 
     private float touchDamageCooldown = 0.5f;
     private float touchDamageTimer = 0f;
@@ -31,8 +33,7 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
     public void Init(EnemyConfigSO cfg, Transform target)
 {
     Config = cfg;
-    this.target = target;
-
+    
     strategy = new SwarmEnemyStrategy(this, target);
 
     health.Init(() => Stats.GetStat(StatType.MaxHP));
@@ -50,12 +51,13 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
     public void Move(Vector2 velocity) => rb.linearVelocity = velocity;
     public void StopMoving() => rb.linearVelocity = Vector2.zero;
 
+    
     public DamageInfo GetDamage()
     {
         return new DamageInfo(Config.damage, this);
     }
 
-    // IDamageable
+    
     public void ApplyDamage(DamageInfo dmg)
     {
         health.ApplyDamage(dmg.Amount);
@@ -63,7 +65,7 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
 
     private void Die()
     {
-        rb.linearVelocity = Vector2.zero;
+        StopMoving();
         OnDespawn?.Invoke(this);
     }
 

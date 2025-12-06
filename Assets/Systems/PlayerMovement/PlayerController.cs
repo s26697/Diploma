@@ -37,19 +37,18 @@ public class PlayerController : MonoBehaviour
 
     private void BindInputCallbacks()
     {
-        // DASH INPUT (event-driven)
+        // Dash input
         controls.Player.Dash.started += _ => dashController.TryStartDash(movementController.MoveInput);
 
+        //Attack input
         controls.Player.Fire.performed += _ => isFiring = true;
         controls.Player.Fire.canceled  += _ => isFiring = false;
 
-        // MOVEMENT INPUT
-        controls.Player.Move.performed += ctx => 
-            movementController.SetMovementInput(ctx.ReadValue<Vector2>());
-        controls.Player.Move.canceled += _ => 
-            movementController.SetMovementInput(Vector2.zero);
+        // Move input
+        controls.Player.Move.performed += ctx =>  movementController.SetMovementInput(ctx.ReadValue<Vector2>());
+        controls.Player.Move.canceled += _ => movementController.SetMovementInput(Vector2.zero);
 
-        // DEBUG SPAWN
+        // Debug Spawn
         controls.Player.Spawn.started += _ => SpawnDebugEnemy();
     }
 
@@ -63,22 +62,13 @@ public class PlayerController : MonoBehaviour
         HandleContinuousFire();
     }
 
-    private void HandleContinuousFire()
-{
-    if (!isFiring) return;
-    AttackInput();
-}
-
 
     private void FixedUpdate()
     {
         movementController.Move(dashController.IsDashing);
     }
 
-    // -------------------------------------------------------
-    // Helper Methods
-    // -------------------------------------------------------
-
+    
     private Vector3 GetMouseWorldPos()
     {
         Vector3 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
@@ -90,7 +80,13 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 mouse = GetMouseWorldPos();
         Vector2 dir = (mouse - transform.position).normalized;
-        weapon.Attack(dir);
+        weapon.TryAttack(dir);
+    }
+
+    private void HandleContinuousFire()
+    {
+        if (!isFiring) return;
+        AttackInput();
     }
 
     private void SpawnDebugEnemy()

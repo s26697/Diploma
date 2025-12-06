@@ -1,63 +1,88 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Projectile : MonoBehaviour, IDamaging
+public class Projectile : MonoBehaviour
 {
     private ProjectileConfigSO config;
-    private ProjectileRuntimeStats currentStats;
+    private ProjectileRuntimeStats stats;
+
+    private IDamaging source;
+    private Rigidbody2D rb;
 
     private Vector2 direction;
     private Vector2 startPos;
+
     private float timeAlive;
 
-    private Rigidbody2D rb;
-
-    private IDamaging source; 
-
     public System.Action<Projectile> OnDespawn;
+
+    
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Init(ProjectileConfigSO cfg, Vector2 dir, ProjectileRuntimeStats stats, IDamaging source)
+    public void Init(ProjectileConfigSO config, Vector2 direction, ProjectileRuntimeStats runtimeStats, IDamaging source)
     {
-        config = cfg;
-        direction = dir.normalized;
-        timeAlive = 0f;
-        startPos = transform.position;
+        this.config = config;
+        this.stats = runtimeStats;
         this.source = source;
 
-        currentStats = stats;
+        this.direction = direction.normalized;
+        this.startPos = transform.position;
+        this.timeAlive = 0f;
 
-        rb.linearVelocity = direction * currentStats.speed;
+        rb.linearVelocity = this.direction * stats.speed;
     }
 
     public DamageInfo GetDamage()
     {
-        return new DamageInfo(currentStats.damage, source);
+        return new DamageInfo(stats.damage, source);
     }
 
+    
     private void Update()
+    {
+        
+        CheckDespawnConditions();
+        RotateToMovement();
+    }
+
+    
+    private void CheckDespawnConditions()
     {
         timeAlive += Time.deltaTime;
 
-        if (config.rotateToVelocity)
-            transform.right = rb.linearVelocity;
-
-        if (timeAlive >= currentStats.lifetime)
+        if (timeAlive >= stats.lifetime)
+        {
             Despawn();
+            return;
+        }
 
-        if (Vector2.Distance(startPos, transform.position) >= currentStats.maxDistance)
+        if (Vector2.Distance(startPos, transform.position) >= stats.maxDistance)
+        {
             Despawn();
+            return;
+        }
     }
+
+    private void RotateToMovement()
+    {
+        Vector2 velocity = rb.linearVelocity;
+        if (velocity.sqrMagnitude > 0.01f)
+            transform.right = velocity;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<IDamageable>(out var dmg))
+        if (other.TryGetComponent<IDamageable>(out var target))
         {
-            dmg.ApplyDamage(GetDamage());
+
+            if (target == source) return;
+            
+            target.ApplyDamage(GetDamage());
             Despawn();
         }
     }

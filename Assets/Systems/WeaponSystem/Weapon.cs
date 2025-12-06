@@ -1,83 +1,70 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Weapon : IDamaging
+public class Weapon 
 {
+    private readonly IDamaging _source;
     private readonly WeaponConfigSO _config;
     private readonly ProjectileFactory _projectileFactory;
     private readonly IStatOwner _stats;
 
     private float _cooldown;
 
-    public Weapon(WeaponConfigSO config, ProjectileFactory projectileFactory, IStatOwner stats)
+    public Weapon(WeaponConfigSO config, ProjectileFactory projectileFactory, IStatOwner stats, IDamaging source)
     {
         _config = config;
         _projectileFactory = projectileFactory;
         _stats = stats;
+        _source = source;
     }
 
-   
+    public void Tick(float dt)
+    {
+        if (_cooldown > 0f)
+            _cooldown -= dt;
+    }
+
+    private bool CanAttack => _cooldown <= 0f;
+
+
     private float GetEffectiveAttackSpeed()
     {
         float baseAS = _config.baseAttackSpeed;
 
         if (_stats != null)
         {
-            float bonus = _stats.GetStat(StatType.AttackSpeed); 
+            float bonus = _stats.GetStat(StatType.AttackSpeed);
             baseAS *= (1f + bonus);
         }
 
         return Mathf.Max(0.01f, baseAS);
     }
 
-    /* #TODO na razie idc about accuracy
-    private float GetAccuracy()
+    private Vector2 ApplyAccuracy(Vector2 direction)
     {
-        float acc = _config.baseAccuracy;
-
-        if (_stats != null)
-        {
-            float bonus = _stats.GetStat(StatType.WeaponAccuracy);
-            acc *= (1f + bonus);
-        }
-
-        return Mathf.Clamp01(acc);
-    }
-*/
-    public void Tick(float dt)
-    {
-        if (_cooldown > 0)
-            _cooldown -= dt;
+        // TODO — implement later
+        return direction.normalized;
     }
 
-    private Vector2 handleDirection()
-    {
-        /* TODO
-        float accuracy = GetAccuracy();
-        float maxAngleOffset = (1f - accuracy) * 10f;
-        float angle = Random.Range(-maxAngleOffset, maxAngleOffset);
-        Quaternion.Euler(0, 0, angle) * direction;
-        */
-
-        return new Vector2(0,0);
-    }
 
     public void Attack(Vector2 origin, Vector2 direction)
     {
-        if (_cooldown > 0)
+        if (!CanAttack)
             return;
 
-        
-        
-       // direction = handleAccuracy();
+        direction = ApplyAccuracy(direction);
 
-        _projectileFactory.Spawn(_config.projectileConfig, _stats, origin, direction,this); 
+        _projectileFactory.Spawn(
+            _config.projectileConfig,
+            _stats,
+            origin,
+            direction,
+            _source
+        );
 
         _cooldown = 1f / GetEffectiveAttackSpeed();
     }
 
-    public DamageInfo GetDamage()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }

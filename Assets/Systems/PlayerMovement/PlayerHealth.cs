@@ -2,10 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(ResourceHealth))]
 [RequireComponent(typeof(StatOwner))]
-public class PlayerHealth : MonoBehaviour, IDamageable
+public class PlayerHealth : MonoBehaviour, IDamageable, IDamaging
 {
     private ResourceHealth health;
     private StatOwner stats;
+
+    public GameObject source => gameObject;
 
     private void Awake()
     {
@@ -42,5 +44,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         Debug.Log("PLAYER DEAD");
         // #TODO dodac i obsluzyc even RaisePlayerDied();
+    }
+
+    public DamageInfo GetDamage()
+    {
+        throw new System.NotImplementedException();
     }
 }
