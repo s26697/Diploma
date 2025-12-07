@@ -2,34 +2,39 @@ using System.Collections.Generic;
 
 public class StatContainer
 {
-    private readonly Dictionary<StatType, List<StatModifier>> _mods = new();
+    private readonly Dictionary<StatType, List<StatModifier>> mods = new();
 
-    public void AddModifier(StatType type, StatModifier mod)
+    public void Add(StatType type, StatModifier mod)
     {
-        if (!_mods.ContainsKey(type))
-            _mods[type] = new List<StatModifier>();
-
-        _mods[type].Add(mod);
-    }
-
-    
-
-    public float GetFinalValue(StatType stat, float baseValue)
-    {
-        if (!_mods.TryGetValue(stat, out var list))
-            return baseValue;
-
-        float add = 0f;
-        float mult = 1f;
-
-        foreach (var m in list)
+        if (!mods.TryGetValue(type, out var list))
         {
-            if (m.Type == StatModType.Additive)
-                add += m.Value;
-            else
-                mult *= (1 + m.Value);
+            list = new List<StatModifier>();
+            mods[type] = list;
         }
 
-        return (baseValue + add) * mult;
+        list.Add(mod);
+    }
+
+    public void Remove(StatType type, StatModifier mod)
+    {
+        if (mods.TryGetValue(type, out var list))
+        {
+            list.Remove(mod);
+        }
+    }
+
+    public void ClearType(StatType type)
+    {
+        if (mods.ContainsKey(type))
+            mods[type].Clear();
+    }
+
+    public void ClearAll() => mods.Clear();
+
+    public IReadOnlyList<StatModifier> GetModifiers(StatType type)
+    {
+        if (mods.TryGetValue(type, out var list))
+            return list;
+        return null;
     }
 }

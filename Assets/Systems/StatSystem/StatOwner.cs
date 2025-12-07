@@ -2,23 +2,21 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatOwner : MonoBehaviour
+public class StatOwner : MonoBehaviour, IStatOwner
 {
     [SerializeField] private StatDefinitionSO definition;
 
-    private StatContainer runtimeMods;
-
+    private StatContainer mods;
+    
     // Cache
-    private readonly Dictionary<StatType, float> currentValues = new();
+    private readonly Dictionary<StatType, float> cache = new();
     private readonly HashSet<StatType> dirty = new();
 
     private void Awake()
     {
-        
         foreach (StatType type in Enum.GetValues(typeof(StatType)))
         {
-            currentValues[type] = definition.GetBaseValue(type);
-            dirty.Add(type); 
+            dirty.Add(type);
         }
     }
 
@@ -26,34 +24,32 @@ public class StatOwner : MonoBehaviour
     {
         if (dirty.Contains(type))
         {
-            Recalculate(type);
+            float final = StatCalculator.CalculateFinal(mods, definition, type);
+            cache[type] = final;
             dirty.Remove(type);
+
+            StatEvents.RaiseStatChanged(this, type, final);
         }
 
-        return currentValues[type];
+        return cache[type];
     }
 
-    private void Recalculate(StatType type)
+    public void AddModifier(StatType type, StatModifier mod)
     {
-        float baseValue = definition.GetBaseValue(type);
+        mods ??= new StatContainer();
+        mods.Add(type, mod);
 
-        if (runtimeMods == null)
-        {
-            currentValues[type] = baseValue;
-            return;
-        }
-
-        float final = runtimeMods.GetFinalValue(type, baseValue);
-        currentValues[type] = final;
+        MarkDirty(type);
     }
 
-    public void AddModifier(StatType type, StatModifier modifier)
+    public void RemoveModifier(StatType type, StatModifier mod)
     {
-        runtimeMods ??= new StatContainer();
-        runtimeMods.AddModifier(type, modifier);
-
-        dirty.Add(type); 
+        mods?.Remove(type, mod);
+        MarkDirty(type);
     }
 
-    
+    private void MarkDirty(StatType type)
+    {
+        dirty.Add(type);
+    }
 }
