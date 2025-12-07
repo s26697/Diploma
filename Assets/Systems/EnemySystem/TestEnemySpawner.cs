@@ -9,7 +9,7 @@ public class TestEnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        factory = new EnemyFactory(config, 5, transform);
+        factory = new EnemyFactory( 5, transform);
     }
 
     private void OnEnable()

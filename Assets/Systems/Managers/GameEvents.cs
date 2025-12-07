@@ -8,7 +8,8 @@ public static class GameEvents
     public static event Action OnGameStarted;
     public static event Action OnGamePaused;
     public static event Action OnGameResumed;
-    public static event Action OnGameOver;
+    public static Action OnGameWon;
+    public static Action OnGameLost;
 
     // Waves
     public static event Action<int> OnWaveStarted;
@@ -22,11 +23,15 @@ public static class GameEvents
 
     public static event Action<Vector2> RequestSpawnEnemy;
 
+    //player
+    public static Action OnPlayerDied;
+
     // Game flow f
     public static void GameStarted() => OnGameStarted?.Invoke();
     public static void GamePaused() => OnGamePaused?.Invoke();
     public static void GameResumed() => OnGameResumed?.Invoke();
-    public static void GameOver() => OnGameOver?.Invoke();
+    public static void GameWon() => OnGameWon?.Invoke();
+    public static void GameLost() => OnGameLost?.Invoke();
 
      // Waves f
     public static void WaveStarted(int wave) => OnWaveStarted?.Invoke(wave);
@@ -41,4 +46,6 @@ public static class GameEvents
     
     public static void RaiseRequestSpawnEnemy(Vector2 position) => RequestSpawnEnemy?.Invoke(position);
     
+    //player 
+    public static void PlayerDied() => OnPlayerDied?.Invoke();
 }

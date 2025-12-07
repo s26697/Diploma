@@ -12,7 +12,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Vector2 mapMax;  
     [SerializeField] private float minDistanceFromPlayer = 5f;
 
-    
+    public int TotalWaves => waves.Length;
+
     private int poolSize = 30;
 
     private EnemyFactory factory;

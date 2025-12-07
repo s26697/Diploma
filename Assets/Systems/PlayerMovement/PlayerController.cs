@@ -94,7 +94,6 @@ public class PlayerController : MonoBehaviour
 
     private void SpawnDebugEnemy()
     {
-        Vector2 pos = (Vector2)(transform.position + (transform.up * 3f));
-        GameEvents.RaiseRequestSpawnEnemy(pos);
+        GameManager.Instance.StartGame();
     }
 }

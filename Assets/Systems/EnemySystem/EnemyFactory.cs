@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFactory
@@ -32,5 +33,5 @@ public class EnemyFactory
 
         return enemy;
     }
-    }
+    
 }
