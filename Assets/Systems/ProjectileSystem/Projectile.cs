@@ -13,6 +13,8 @@ public class Projectile : MonoBehaviour
     private Vector2 startPos;
 
     private float timeAlive;
+    private bool hasHit = false;
+
 
     public System.Action<Projectile> OnDespawn;
 
@@ -32,6 +34,7 @@ public class Projectile : MonoBehaviour
         this.direction = direction.normalized;
         this.startPos = transform.position;
         this.timeAlive = 0f;
+        this.hasHit = false;
 
         rb.linearVelocity = this.direction * stats.speed;
     }
@@ -77,12 +80,13 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (hasHit) return;
+
         if (other.TryGetComponent<IDamageable>(out var target))
         {
-
             if (target == source) return;
-            
             target.ApplyDamage(GetDamage());
+            hasHit = true;
             Despawn();
         }
     }

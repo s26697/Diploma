@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private PlayerMovementController movementController;
     private PlayerDashController dashController;
 
+    public SpriteRenderer sr {get; private set;}
+
     private void Awake()
     {
         InitSingleton();
@@ -22,7 +24,8 @@ public class PlayerController : MonoBehaviour
         controls = new Playeractions();
         stats = GetComponent<StatOwner>();
         weapon = GetComponent<WeaponSystem>();
-
+        sr = GetComponentInChildren<SpriteRenderer>();
+        
         movementController = new PlayerMovementController(GetComponent<Rigidbody2D>(), stats);
         dashController = new PlayerDashController();
 
@@ -79,7 +82,7 @@ public class PlayerController : MonoBehaviour
     private void AttackInput()
     {
         Vector3 mouse = GetMouseWorldPos();
-        Vector2 dir = (mouse - transform.position).normalized;
+        Vector2 dir = (mouse - weapon._muzzle.position).normalized;
         weapon.TryAttack(dir);
     }
 

@@ -71,13 +71,20 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (touchDamageTimer > 0f)
-            return;
+        
+    if (touchDamageTimer > 0f)
+        return;
+    
+    if (!other.TryGetComponent<IDamageable>(out var dmgTarget))
+        return;
 
-        if (other.TryGetComponent<IDamageable>(out var dmgTarget))
-        {
-            touchDamageTimer = touchDamageCooldown;
-            dmgTarget.ApplyDamage(GetDamage());
-        }
+    // only damage player OR non-enemy
+    if (other.TryGetComponent<PlayerHealth>(out _) || !other.TryGetComponent<Enemy>(out _))
+    {
+        touchDamageTimer = touchDamageCooldown;
+        dmgTarget.ApplyDamage(GetDamage());
+    }
+
+
     }
 }

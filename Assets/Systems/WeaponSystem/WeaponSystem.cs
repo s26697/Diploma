@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponSystem : MonoBehaviour
 {
     [SerializeField] private WeaponConfigSO _weaponConfig;
-    [SerializeField] private Transform _muzzle;
+    [SerializeField] public Transform _muzzle; 
 
     private Weapon _weapon;
     private ProjectileFactory _factory;
@@ -36,4 +36,5 @@ public class WeaponSystem : MonoBehaviour
 
         _weapon.Attack(_muzzle.position, direction);
     }
+
 }

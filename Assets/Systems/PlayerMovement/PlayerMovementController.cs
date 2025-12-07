@@ -5,12 +5,15 @@ public class PlayerMovementController
     private readonly Rigidbody2D rb;
     private readonly StatOwner stats;
 
+    
+
     public Vector2 MoveInput { get; private set; }
 
     public PlayerMovementController(Rigidbody2D rb, StatOwner stats)
     {
         this.rb = rb;
         this.stats = stats;
+        
     }
 
     public void SetMovementInput(Vector2 input)
@@ -35,8 +38,6 @@ public class PlayerMovementController
     public void UpdateFacing(Vector3 mouseWorld)
     {
         Transform t = rb.transform;
-
-        // preferuj flipX jeśli masz SpriteRenderer
         SpriteRenderer sr = t.GetComponentInChildren<SpriteRenderer>();
         if (sr != null)
         {
@@ -44,7 +45,7 @@ public class PlayerMovementController
             return;
         }
 
-        // fallback: scale flip
+        
         Vector3 scale = t.localScale;
         scale.x = mouseWorld.x < t.position.x ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
         t.localScale = scale;
