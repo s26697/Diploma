@@ -2,20 +2,35 @@ using UnityEngine;
 
 public class EnemyFactory
 {
-    private readonly EnemyPool pool;
+    private readonly Transform parent;
 
-    public EnemyFactory(EnemyConfigSO cfg, int poolSize, Transform parent)
+    private readonly Dictionary<EnemyConfigSO, EnemyPool> pools = new();
+
+    private readonly int defaultPoolSize;
+
+    public EnemyFactory(int defaultPoolSize, Transform parent)
     {
-        pool = new EnemyPool(cfg.prefab, poolSize, parent);
+        this.defaultPoolSize = defaultPoolSize;
+        this.parent = parent;
     }
 
     public Enemy Spawn(EnemyConfigSO config, Vector2 pos, Transform target)
     {
-        Enemy e = pool.Get();
-        e.transform.position = pos;
-        e.gameObject.SetActive(true);
+        if (!pools.TryGetValue(config, out var pool))
+        {
+            
+            pool = new EnemyPool(config.prefab, defaultPoolSize, parent);
+            pools[config] = pool;
+        }
 
-        e.Init(config, target);
-        return e;
+        
+        Enemy enemy = pool.Get();
+        enemy.transform.position = pos;
+        enemy.gameObject.SetActive(true);
+
+        enemy.Init(config, target);
+
+        return enemy;
+    }
     }
 }

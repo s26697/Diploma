@@ -34,13 +34,13 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
 {
     Config = cfg;
     
-    strategy = new SwarmEnemyStrategy(this, target);
+    strategy = new SwarmEnemyStrategy(this, target); //TODO config
 
     health.Init(() => Stats.GetStat(StatType.MaxHP));
 }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         float dt = Time.deltaTime;
 
@@ -66,6 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
     private void Die()
     {
         StopMoving();
+        GameEvents.EnemyDied(this);
         OnDespawn?.Invoke(this);
     }
 
@@ -78,8 +79,11 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
     if (!other.TryGetComponent<IDamageable>(out var dmgTarget))
         return;
 
-    // only damage player OR non-enemy
-    if (other.TryGetComponent<PlayerHealth>(out _) || !other.TryGetComponent<Enemy>(out _))
+    if (other.TryGetComponent<Enemy>(out _))
+        return;
+    
+    
+    if (other.TryGetComponent<PlayerHealth>(out _) )
     {
         touchDamageTimer = touchDamageCooldown;
         dmgTarget.ApplyDamage(GetDamage());
