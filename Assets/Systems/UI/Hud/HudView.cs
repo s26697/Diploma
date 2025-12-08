@@ -14,7 +14,7 @@ public class HUDView : MonoBehaviour
 
     public void SetWaveCounter(int waveNumber)
     {
-        waveCounterText.text = $"Wave: {waveNumber}";
+        waveCounterText.text = $"Wave: {waveNumber + 1}";
     }
 
     public void SetWaveTimer(float time)

@@ -18,5 +18,5 @@ MonoBehaviour:
   - config: {fileID: 11400000, guid: 3e51e4da3070a68fcb2b57333e5b4fbc, type: 2}
     count: 10
   spawnInterval: 0.5
-  timeToCOmplete: 20
+  timeToCOmplete: 15
   waitForClear: 1

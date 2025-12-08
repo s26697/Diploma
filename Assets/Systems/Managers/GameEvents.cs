@@ -42,12 +42,23 @@ public static class GameEvents
     // Spawning
     public static void EnemySpawned(Enemy enemy) => OnEnemySpawned?.Invoke(enemy);
 
-    public static void EnemyDied(Enemy e) => OnEnemyDied?.Invoke(e);
+    public static void EnemyDied(Enemy e)
+    {
+        OnEnemyDied?.Invoke(e);
+
+        
+        if (e != null)
+            PlayerGainedXP(e.Config.xpReward); 
+    }
     
     public static void RaiseRequestSpawnEnemy(Vector2 position) => RequestSpawnEnemy?.Invoke(position);
     
     //player 
     public static void PlayerDied() => OnPlayerDied?.Invoke();
+
+    public static event Action<float> OnPlayerGainedXP;
+    public static void PlayerGainedXP(float amount) => OnPlayerGainedXP?.Invoke(amount);
+
 
     // HUD-specific
     public static event Action<int> OnWaveTimerTick;  
@@ -57,5 +68,9 @@ public static class GameEvents
 
     public static void PlayerHealthChanged(float current, float max) =>
         OnPlayerHealthChanged?.Invoke(current, max);
+
+
+
 }
+
 
