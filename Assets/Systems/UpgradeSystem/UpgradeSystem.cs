@@ -6,18 +6,20 @@ public class UpgradeSystem : MonoBehaviour
     [Header("Data")]
     [SerializeField] private UpgradeDefinitionSO[] allUpgrades;
 
+
     [Header("UI")]
     [SerializeField] private UpgradeUI upgradeUI;
 
     [Header("Refs")]
     [SerializeField] private StatOwner playerStats;
-
+    [Header("xp")]
+    [SerializeField] private float xpToLevelUp;
     private XPTracker xpTracker;
     private UpgradeSelector selector;
 
     private void Awake()
     {
-        xpTracker = new XPTracker(15);         
+        xpTracker = new XPTracker(xpToLevelUp);         
         selector = new UpgradeSelector(allUpgrades);
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private WaveManager waveManager;
 
+    [SerializeField] private float startDelay = 5f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -17,6 +20,26 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    private void Start()
+    {
+        
+        StartCoroutine(StartGameAfterDelay());
+    }
+
+    private IEnumerator StartGameAfterDelay()
+    {
+        
+        float timer = startDelay;
+        while (timer > 0f)
+        {
+            GameEvents.WaveTimerTick(Mathf.CeilToInt(timer));
+            yield return null;
+            timer -= Time.deltaTime;
+        }
+
+        StartGame();
     }
 
     private void OnEnable()

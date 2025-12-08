@@ -98,7 +98,8 @@ public class PlayerController : MonoBehaviour
 
     private void SpawnDebugEnemy()
     {
-        GameManager.Instance.StartGame(); //TODO ,,,,
+        Debug.Log("SPAWDEBUGENEMYTRIGGERED");
+        //GameManager.Instance.StartGame(); //TODO ,,,,
     }
 
     private void TogglePause()

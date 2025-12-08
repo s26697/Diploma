@@ -45,8 +45,8 @@ public class Weapon
         if (_stats == null)
             return 1;
 
-        // bonus 0 -> 1 pocisk. bonus 1 -> 2 pociski, bonus 2 -> 3 itd.
-        int count = 1 + Mathf.RoundToInt(_stats.GetStat(StatType.ProjectileCount));
+        
+        int count = _config.baseProjectiles + Mathf.RoundToInt(_stats.GetStat(StatType.ProjectileCount));
 
         return Mathf.Max(1, count);
     }

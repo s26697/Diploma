@@ -8,7 +8,8 @@ public class WeaponConfigSO : ScriptableObject
     //public RuntimeAnimatorController animatorController;
 
     [Header("Base Stats")]
-    public float baseAttackSpeed = 1f;   
+    public float baseAttackSpeed = 1f; 
+    public int baseProjectiles = 1;  
     public float baseAccuracy = 1f;      
 
     [Header("Projectile")]

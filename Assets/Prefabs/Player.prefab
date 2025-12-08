@@ -58,7 +58,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4130210247714543408}
@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 7264251214975166352}
   - component: {fileID: 865566413989251517}
   - component: {fileID: 352121261817660837}
+  - component: {fileID: 2992217839434359683}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -230,6 +231,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 93150d6e-d516-4e6e-93c7-d804806e9635
     m_ActionName: 'Player/Spawn[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e3ab540a-9769-4455-b74c-ff4c1ed481c8
+    m_ActionName: 'Player/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: pc-keyboard-mouse
   m_DefaultActionMap: Player
@@ -247,9 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21e4f1e99ad814b968d72ee5a58a30a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _dashDuration: 0.2
-  _dashCooldown: 1
-  mySpriteRender: {fileID: 2680885455184750325}
 --- !u!114 &5883233243679623350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +349,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeaecfb3b61c5ce7e8bbc1a701b13c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceHealth
+--- !u!61 &2992217839434359683
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642511180446704187}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &8666988415169486323
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,8 +422,8 @@ Transform:
   m_GameObject: {fileID: 8666988415169486323}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.58, y: -1.82, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalPosition: {x: 0.374, y: -1.309, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5098266052896089585}
@@ -451,3 +499,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd712a7a09cd1af3cb08760955f5c548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTowardsCursor
+  muzzle: {fileID: 5098266052896089585}

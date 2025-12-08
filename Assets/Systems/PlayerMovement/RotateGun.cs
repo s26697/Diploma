@@ -22,7 +22,7 @@ public class RotateGun : MonoBehaviour
         originalScale = transform.localScale;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Rotate();
         ApplyFlip();

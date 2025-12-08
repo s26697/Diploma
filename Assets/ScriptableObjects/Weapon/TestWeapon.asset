@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f456d67fe205b9b688c4fd0664f4ba7, type: 3}
   m_Name: TestWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponConfigSO
-  baseAttackSpeed: 2
+  baseAttackSpeed: 1
   baseAccuracy: 1
   projectileConfig: {fileID: 11400000, guid: 1a80f80508763dffe9c17c5c8c2f9b50, type: 2}
