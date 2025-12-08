@@ -5,24 +5,35 @@ public class WaveManager : MonoBehaviour
 {
     [SerializeField] private WaveSO[] waves;
     [SerializeField] private Transform player;
-    
 
     [Header("map range and spawning settings")]
-    [SerializeField] private Vector2 mapMin;  
-    [SerializeField] private Vector2 mapMax;  
+    [SerializeField] private Vector2 mapMin;
+    [SerializeField] private Vector2 mapMax;
     [SerializeField] private float minDistanceFromPlayer = 5f;
 
     public int TotalWaves => waves.Length;
 
-    private int poolSize = 30;
 
     private EnemyFactory factory;
+    private IWaveSpawnStrategy spawnStrategy;
+
     private int currentWave = -1;
     private int aliveEnemies = 0;
 
+    private float waveTimer = 0f;
+    private bool waveTimeExpired = false;
+
     private void Awake()
     {
-        factory = new EnemyFactory(poolSize, transform);
+        factory = new EnemyFactory(30, transform);
+
+        spawnStrategy = new DefaultWaveSpawnStrategy(
+            factory,
+            player,
+            mapMin,
+            mapMax,
+            minDistanceFromPlayer
+        );
     }
 
     private void OnEnable()
@@ -37,6 +48,11 @@ public class WaveManager : MonoBehaviour
         GameEvents.OnEnemyDied -= OnEnemyDied;
     }
 
+    private void Update()
+    {
+        WaveTimerTick();
+    }
+
     private void StartWaveFlow()
     {
         StartCoroutine(WaveRoutine());
@@ -48,56 +64,42 @@ public class WaveManager : MonoBehaviour
         {
             currentWave = i;
             aliveEnemies = 0;
+            waveTimeExpired = false;
 
             var wave = waves[i];
+            waveTimer = wave.timeToCOmplete;
+
             GameEvents.WaveStarted(i);
 
-            yield return StartCoroutine(SpawnWave(wave));
+            
+            yield return StartCoroutine(spawnStrategy.ExecuteSpawn(wave));
 
-            if (wave.waitForClear)
-                yield return new WaitUntil(() => aliveEnemies == 0);
+            
+            yield return new WaitUntil(() =>
+                aliveEnemies == 0 || waveTimeExpired
+            );
 
             GameEvents.WaveCompleted(i);
         }
     }
 
-    private IEnumerator SpawnWave(WaveSO wave)
+    private void WaveTimerTick()
     {
-        foreach (var entry in wave.enemies)
-        {
-            for (int i = 0; i < entry.count; i++)
-            {
-                
-                
-                factory.Spawn(entry.config, GetRandomSpawnPosition(), player);
-                aliveEnemies++;
+        if (currentWave < 0) return;
 
-                yield return new WaitForSeconds(wave.spawnInterval);
-            }
+        waveTimer -= Time.deltaTime;
+
+        if (waveTimer <= 0f)
+        {
+            waveTimer = 0f;
+            waveTimeExpired = true;
         }
+
+        GameEvents.WaveTimerTick(Mathf.CeilToInt(waveTimer));
     }
 
     private void OnEnemyDied(Enemy e)
     {
         aliveEnemies--;
     }
-
-    private Vector2 GetRandomSpawnPosition()
-{
-    Vector2 playerPos = player.position;
-
-    for (int i = 0; i < 20; i++)
-    {
-        float x = Random.Range(mapMin.x, mapMax.x);
-        float y = Random.Range(mapMin.y, mapMax.y);
-
-        Vector2 candidate = new Vector2(x, y);
-
-        if ((candidate - playerPos).sqrMagnitude >= minDistanceFromPlayer * minDistanceFromPlayer)
-            return candidate;
-    }
-
-    return playerPos + (Random.insideUnitCircle.normalized * minDistanceFromPlayer);
-}
-
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ResourceHealth : MonoBehaviour
@@ -5,12 +6,12 @@ public class ResourceHealth : MonoBehaviour
     public float Current { get; private set; }
     public float Max => maxProvider?.Invoke() ?? 100f;
 
-    private System.Func<float> maxProvider;
+    private Func<float> maxProvider;
 
-    public event System.Action<float, float> OnHealthChanged; 
-    public event System.Action OnHealthZero;
+    public event Action<float, float> OnHealthChanged;
+    public event Action OnHealthZero;
 
-    public void Init(System.Func<float> maxProvider)
+    public void Init(Func<float> maxProvider)
     {
         this.maxProvider = maxProvider;
         Current = Max;
@@ -19,18 +20,10 @@ public class ResourceHealth : MonoBehaviour
 
     public void ApplyDamage(float amount)
     {
-        Current -= amount;
-        if (Current < 0f) Current = 0f;
-
+        Current = Mathf.Max(0f, Current - amount);
         OnHealthChanged?.Invoke(Current, Max);
 
-        if (Current <= 0f)
+        if (Current <= 0)
             OnHealthZero?.Invoke();
-    }
-
-    public void RestoreFull()
-    {
-        Current = Max;
-        OnHealthChanged?.Invoke(Current, Max);
     }
 }

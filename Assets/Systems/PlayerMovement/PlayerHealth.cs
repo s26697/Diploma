@@ -24,12 +24,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IDamaging
 
     private void BindEvents()
     {
+        
         health.OnHealthZero += Die;
+
+        health.OnHealthChanged += OnHealthChanged;
     }
 
     private void InitializeHealth()
     {
         health.Init(() => stats.GetStat(StatType.MaxHP));
+        OnHealthChanged(health.Current, health.Max);
     }
 
     public void ApplyDamage(DamageInfo dmg)
@@ -40,10 +44,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IDamaging
         Debug.Log($"PLAYER HIT for {dmg.Amount}");
     }
 
+    private void OnHealthChanged(float current, float max)
+    {
+       
+        GameEvents.PlayerHealthChanged(current, max);
+    }
+
     private void Die()
     {
         Debug.Log("PLAYER DEAD");
-        // #TODO dodac i obsluzyc even RaisePlayerDied();
+        // TODO: GameEvents.PlayerDied();
     }
 
     public DamageInfo GetDamage()

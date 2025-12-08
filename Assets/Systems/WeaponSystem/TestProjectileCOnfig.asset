@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: TestProjectileCOnfig
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileConfigSO
   prefab: {fileID: -6601614521584323438, guid: 6944ffc403e6028f38681615b9bb3e7c, type: 3}
-  speed: 10
+  speed: 15
   lifetime: 2
   damage: 10
   maxDistance: 20
-  rotateToVelocity: 1

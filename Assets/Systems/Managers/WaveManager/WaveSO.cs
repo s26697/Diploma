@@ -5,6 +5,7 @@ public class WaveSO : ScriptableObject
 {
     public WaveEntry[] enemies;
     public float spawnInterval = 0.2f;
+    public float timeToCOmplete = 20;
     public bool waitForClear = true;
 }
 

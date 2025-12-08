@@ -17,7 +17,7 @@ public static class GameEvents
     public static event Action<int> OnWaveAllEnemiesDefeated;
 
     // Spawning
-    public static event Action<GameObject> OnEnemySpawned;
+    public static event Action<Enemy> OnEnemySpawned;
 
     public static event Action<Enemy> OnEnemyDied;
 
@@ -40,7 +40,7 @@ public static class GameEvents
 
     
     // Spawning
-    public static void EnemySpawned(GameObject enemy) => OnEnemySpawned?.Invoke(enemy);
+    public static void EnemySpawned(Enemy enemy) => OnEnemySpawned?.Invoke(enemy);
 
     public static void EnemyDied(Enemy e) => OnEnemyDied?.Invoke(e);
     
@@ -48,4 +48,14 @@ public static class GameEvents
     
     //player 
     public static void PlayerDied() => OnPlayerDied?.Invoke();
+
+    // HUD-specific
+    public static event Action<int> OnWaveTimerTick;  
+    public static event Action<float, float> OnPlayerHealthChanged;
+
+    public static void WaveTimerTick(int seconds) => OnWaveTimerTick?.Invoke(seconds);
+
+    public static void PlayerHealthChanged(float current, float max) =>
+        OnPlayerHealthChanged?.Invoke(current, max);
 }
+
