@@ -52,8 +52,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IDamaging
 
     private void Die()
     {
-        Debug.Log("PLAYER DEAD");
-        // TODO: GameEvents.PlayerDied();
+        
+        GameEvents.PlayerDied();
     }
 
     public DamageInfo GetDamage()

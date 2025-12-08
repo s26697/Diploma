@@ -53,6 +53,10 @@ public class PlayerController : MonoBehaviour
 
         // Debug Spawn
         controls.Player.Spawn.started += _ => SpawnDebugEnemy();
+
+        // pausemenu
+        controls.Player.Pause.started += _ => TogglePause();
+
     }
 
     private void OnEnable() => controls.Enable();
@@ -94,6 +98,13 @@ public class PlayerController : MonoBehaviour
 
     private void SpawnDebugEnemy()
     {
-        GameManager.Instance.StartGame();
+        GameManager.Instance.StartGame(); //TODO ,,,,
     }
+
+    private void TogglePause()
+    {
+    if (GameManager.Instance.State == GameState.Playing) GameManager.Instance.PauseGame();
+    else if (GameManager.Instance.State == GameState.Paused) GameManager.Instance.ResumeGame();
+    }
+
 }

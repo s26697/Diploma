@@ -69,7 +69,12 @@ public static class GameEvents
     public static void PlayerHealthChanged(float current, float max) =>
         OnPlayerHealthChanged?.Invoke(current, max);
 
+    // pausemenu
+    public static event Action OnPauseMenuOpened;
+    public static event Action OnPauseMenuClosed;
 
+    public static void PauseMenuOpened() => OnPauseMenuOpened?.Invoke();
+    public static void PauseMenuClosed() => OnPauseMenuClosed?.Invoke();
 
 }
 
