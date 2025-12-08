@@ -17,7 +17,7 @@ public class UpgradeSystem : MonoBehaviour
 
     private void Awake()
     {
-        xpTracker = new XPTracker(100);         
+        xpTracker = new XPTracker(15);         
         selector = new UpgradeSelector(allUpgrades);
     }
 

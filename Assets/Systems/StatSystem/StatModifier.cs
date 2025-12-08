@@ -1,11 +1,14 @@
 
 using System;
+using UnityEngine;
 
 [Serializable]
 public class StatModifier
 {
-    public readonly float Value;
-    public readonly StatModType Type;
+    [SerializeField]
+    public float Value;
+     [SerializeField]
+    public StatModType Type;
 
     public StatModifier(float value, StatModType type)
     {

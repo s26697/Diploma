@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Weapon 
@@ -41,6 +40,17 @@ public class Weapon
         return Mathf.Max(0.01f, baseAS);
     }
 
+    private int GetProjectileCount()
+    {
+        if (_stats == null)
+            return 1;
+
+        // bonus 0 -> 1 pocisk. bonus 1 -> 2 pociski, bonus 2 -> 3 itd.
+        int count = 1 + Mathf.RoundToInt(_stats.GetStat(StatType.ProjectileCount));
+
+        return Mathf.Max(1, count);
+    }
+
     private Vector2 ApplyAccuracy(Vector2 direction)
     {
         // TODO — implement later
@@ -55,6 +65,23 @@ public class Weapon
 
         direction = ApplyAccuracy(direction);
 
+        int projectileCount = GetProjectileCount();
+
+        if (projectileCount == 1)
+        {
+            SpawnProjectile(origin, direction);
+        }
+        else
+        {
+            SpawnProjectileBurst(origin, direction, projectileCount);
+        }
+
+        _cooldown = 1f / GetEffectiveAttackSpeed();
+    }
+
+
+    private void SpawnProjectile(Vector2 origin, Vector2 direction)
+    {
         _projectileFactory.Spawn(
             _config.projectileConfig,
             _stats,
@@ -62,9 +89,19 @@ public class Weapon
             direction,
             _source
         );
-
-        _cooldown = 1f / GetEffectiveAttackSpeed();
     }
 
-    
+    private void SpawnProjectileBurst(Vector2 origin, Vector2 direction, int count)
+    {
+        float angleStep = 10f; // TODO stały rozrzut
+        float mid = (count - 1) * 0.5f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float offset = (i - mid) * angleStep;
+            Vector2 finalDir = Quaternion.Euler(0, 0, offset) * direction;
+
+            SpawnProjectile(origin, finalDir);
+        }
+    }
 }
