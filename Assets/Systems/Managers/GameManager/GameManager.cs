@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float startDelay = 5f;
 
+    [SerializeField] private AudioDataSO _gameplaymusic;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         ChangeState(GameState.Playing);
+        AudioEvents.PlayMusic(_gameplaymusic.GetRandom());
         GameEvents.GameStarted();
     }
 
