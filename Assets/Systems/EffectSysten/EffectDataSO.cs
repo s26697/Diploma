@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +5,7 @@ using UnityEngine;
  public class EffectDataSO : ScriptableObject
 {
     public string label;
-    [SerializeReference]
-    public List<Effect> effects;
+    [SerializeReference] public List<Effect> effects;
 
     void OnEnable()
     {

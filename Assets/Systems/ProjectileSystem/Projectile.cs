@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     
     private EffectExecutor executor;
 
-    private IDamaging source;
+    private GameObject sourceGO;
     private Rigidbody2D rb;
 
     private Vector2 direction;
@@ -29,11 +29,12 @@ public class Projectile : MonoBehaviour
         executor = GetComponent<EffectExecutor>();
     }
 
-    public void Init(ProjectileConfigSO config, Vector2 direction, ProjectileRuntimeStats runtimeStats, IDamaging source)
+    public void Init(ProjectileConfigSO config, Vector2 direction, ProjectileRuntimeStats runtimeStats, GameObject sourceGO)
     {
         this.config = config;
         this.stats = runtimeStats;
-        this.source = source;
+        this.sourceGO = sourceGO;
+        executor.SetSource(sourceGO);
 
         this.direction = direction.normalized;
         this.startPos = transform.position;
@@ -82,8 +83,9 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (hasHit) return;
+        if (other.gameObject == sourceGO) return;
 
-        if (executor.execute(other.gameObject))
+        if (executor.Execute(other.gameObject))
         {
             hasHit = true;
             Despawn();

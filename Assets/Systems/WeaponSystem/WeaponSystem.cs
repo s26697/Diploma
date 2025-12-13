@@ -10,12 +10,12 @@ public class WeaponSystem : MonoBehaviour
     private ProjectileFactory _factory;
     private IStatOwner _stats;
 
-    private IDamaging _source;
+    private GameObject _source;
 
     private void Awake()
     {
         _stats = GetComponent<IStatOwner>();
-        _source = GetComponent<PlayerHealth>();
+        _source = gameObject;
         _factory = new ProjectileFactory();
 
         _weapon = new Weapon(_weaponConfig, _factory, _stats, _source);

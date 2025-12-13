@@ -13,7 +13,7 @@ public class ProjectileFactory
     }
     
 
-    public void Spawn(ProjectileConfigSO config, IStatOwner owner, Vector2 position, Vector2 direction, IDamaging source)
+    public void Spawn(ProjectileConfigSO config, IStatOwner owner, Vector2 position, Vector2 direction, GameObject source)
     {
         if(pool == null)
         {

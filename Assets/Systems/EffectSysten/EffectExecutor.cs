@@ -1,18 +1,30 @@
 using System;
 using UnityEngine;
 
-class EffectExecutor : MonoBehaviour
+public class EffectExecutor : MonoBehaviour
 {
-    [SerializeField]
-    EffectDataSO effectData;
-    
+    [SerializeField] private EffectDataSO effectData;
 
-    public bool execute (GameObject target)
+    private GameObject source;
+
+    public void SetSource(GameObject source)
     {
+        this.source = source;
+    }
+
+    public bool Execute(GameObject target)
+    {
+        if (effectData == null || effectData.effects.Count == 0)
+            return false;
+
+        bool anyExecuted = false;
+
         foreach (var effect in effectData.effects)
         {
-            effect.Execute(gameObject, target);
+            if (effect.Execute(source, target))
+                anyExecuted = true;
         }
-        return true;
+
+        return anyExecuted;
     }
 }

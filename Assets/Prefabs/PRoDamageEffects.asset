@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: PRoDamageEffects
   m_EditorClassIdentifier: Assembly-CSharp::EffectDataSO
   label: PRoDamageEffects
-  effects: []
+  effects:
+  - rid: 7049027632173416536
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7049027632173416536
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        amount: 5

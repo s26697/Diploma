@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class Weapon 
 {
-    private readonly IDamaging _source;
+    private readonly GameObject _source;
     private readonly WeaponConfigSO _config;
     private readonly ProjectileFactory _projectileFactory;
     private readonly IStatOwner _stats;
 
     private float _cooldown;
 
-    public Weapon(WeaponConfigSO config, ProjectileFactory projectileFactory, IStatOwner stats, IDamaging source)
+    public Weapon(WeaponConfigSO config, ProjectileFactory projectileFactory, IStatOwner stats, GameObject source)
     {
         _config = config;
         _projectileFactory = projectileFactory;
