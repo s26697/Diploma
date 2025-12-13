@@ -1,10 +1,13 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(EffectExecutor))]
 public class Projectile : MonoBehaviour
 {
     private ProjectileConfigSO config;
     private ProjectileRuntimeStats stats;
+    
+    private EffectExecutor executor;
 
     private IDamaging source;
     private Rigidbody2D rb;
@@ -23,6 +26,7 @@ public class Projectile : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        executor = GetComponent<EffectExecutor>();
     }
 
     public void Init(ProjectileConfigSO config, Vector2 direction, ProjectileRuntimeStats runtimeStats, IDamaging source)
@@ -39,10 +43,7 @@ public class Projectile : MonoBehaviour
         rb.linearVelocity = this.direction * stats.speed;
     }
 
-    public DamageInfo GetDamage()
-    {
-        return new DamageInfo(stats.damage, source);
-    }
+    
 
     
     private void Update()
@@ -82,10 +83,8 @@ public class Projectile : MonoBehaviour
     {
         if (hasHit) return;
 
-        if (other.TryGetComponent<IDamageable>(out var target))
+        if (executor.execute(other.gameObject))
         {
-            if (target == source) return;
-            target.ApplyDamage(GetDamage());
             hasHit = true;
             Despawn();
         }
