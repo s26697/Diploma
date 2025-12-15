@@ -24,84 +24,60 @@ public class Weapon
             _cooldown -= dt;
     }
 
-    private bool CanAttack => _cooldown <= 0f;
+   public void Attack(Vector2 origin, Vector2 direction)
+{
+    if (_cooldown > 0f)
+        return;
 
+    if (_config.attackStrategy == null)
+    {
+        Debug.LogWarning("Weapon has no attack strategy!");
+        return;
+    }
+
+    int projectileCount = GetProjectileCount();
+    float accuracy = _config.baseAccuracy;
+
+    var ctx = new AttackContext(
+        origin,
+        direction,
+        _projectileFactory,
+        _stats,               
+        _source,
+        _config.projectileConfig,
+        projectileCount,
+        accuracy
+    );
+
+    _config.attackStrategy.Attack(ctx);
+    _cooldown = 1f / GetEffectiveAttackSpeed();
+}
 
     private float GetEffectiveAttackSpeed()
     {
-        float baseAS = _config.baseAttackSpeed;
+        float aspeed = _config.baseAttackSpeed;
 
         if (_stats != null)
-        {
-            float bonus = _stats.GetStat(StatType.AttackSpeed);
-            baseAS *= (1f + bonus);
-        }
+            aspeed *= 1f + _stats.GetStat(StatType.AttackSpeed);
 
-        return Mathf.Max(0.01f, baseAS);
+        return Mathf.Max(0.01f, aspeed);
     }
 
     private int GetProjectileCount()
-    {
-        if (_stats == null)
-            return 1;
+{
+    int count = _config.baseProjectiles;
 
-        
-        int count = _config.baseProjectiles + Mathf.RoundToInt(_stats.GetStat(StatType.ProjectileCount));
+    if (_stats != null)
+        count += Mathf.RoundToInt(_stats.GetStat(StatType.ProjectileCount));
 
-        return Mathf.Max(1, count);
-    }
+    return Mathf.Max(1, count);
+}
 
-    private Vector2 ApplyAccuracy(Vector2 direction)
-    {
-        // TODO — implement later
-        return direction.normalized;
-    }
+private float GetAccuracy()
+{
+    float acc = _config.baseAccuracy;
 
+    return Mathf.Clamp01(acc);
+}
 
-    public void Attack(Vector2 origin, Vector2 direction)
-    {
-        if (!CanAttack)
-            return;
-
-        direction = ApplyAccuracy(direction);
-
-        int projectileCount = GetProjectileCount();
-
-        if (projectileCount == 1)
-        {
-            SpawnProjectile(origin, direction);
-        }
-        else
-        {
-            SpawnProjectileBurst(origin, direction, projectileCount);
-        }
-
-        _cooldown = 1f / GetEffectiveAttackSpeed();
-    }
-
-
-    private void SpawnProjectile(Vector2 origin, Vector2 direction)
-    {
-        _projectileFactory.Spawn(
-            _config.projectileConfig,
-            _stats,
-            origin,
-            direction,
-            _source
-        );
-    }
-
-    private void SpawnProjectileBurst(Vector2 origin, Vector2 direction, int count)
-    {
-        float angleStep = 10f; // TODO stały rozrzut
-        float mid = (count - 1) * 0.5f;
-
-        for (int i = 0; i < count; i++)
-        {
-            float offset = (i - mid) * angleStep;
-            Vector2 finalDir = Quaternion.Euler(0, 0, offset) * direction;
-
-            SpawnProjectile(origin, finalDir);
-        }
-    }
 }

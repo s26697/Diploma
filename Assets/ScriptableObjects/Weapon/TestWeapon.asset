@@ -13,5 +13,16 @@ MonoBehaviour:
   m_Name: TestWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponConfigSO
   baseAttackSpeed: 1
-  baseAccuracy: 1
+  baseProjectiles: 1
+  baseAccuracy: 0.8
+  attackStrategy:
+    rid: 7049027666281234520
   projectileConfig: {fileID: 11400000, guid: 1a80f80508763dffe9c17c5c8c2f9b50, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7049027666281234520
+      type: {class: StraightAttackStrategy, ns: , asm: Assembly-CSharp}
+      data:
+        maxSpreadAngle: 14.45
+        spawnSpacing: 0.201

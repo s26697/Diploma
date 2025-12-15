@@ -12,6 +12,10 @@ public class WeaponConfigSO : ScriptableObject
     public int baseProjectiles = 1;  
     public float baseAccuracy = 1f;      
 
+    [Header("Attack Strategy")]
+    [SerializeReference]
+    public IAttackStrategy attackStrategy;
+
     [Header("Projectile")]
     public ProjectileConfigSO projectileConfig;
 }
