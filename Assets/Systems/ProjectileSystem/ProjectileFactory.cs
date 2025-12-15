@@ -1,38 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileFactory 
+public class ProjectileFactory
 {
-    
-    private int poolSize = 50;
-    private ProjectilePool pool;
+    private readonly int defaultPoolSize;
+    private readonly Dictionary<ProjectileConfigSO, ProjectilePool> pools = new();
 
-     public ProjectileFactory( int PoolSize = 50)
+    public ProjectileFactory(int defaultPoolSize = 50)
     {
-        this.poolSize = PoolSize;
-
+        this.defaultPoolSize = defaultPoolSize;
     }
-    
 
     public void Spawn(ProjectileConfigSO config, IStatOwner owner, Vector2 position, Vector2 direction, GameObject source)
     {
-        if(pool == null)
+        if (config == null || config.prefab == null)
         {
-            pool = new ProjectilePool(config.prefab,poolSize);
+            Debug.LogWarning("[ProjectileFactory] Config or prefab is null!");
+            return;
         }
-        // #todo dodać statystyki z których korzysta z statsystemu
+
+        
+        if (!pools.TryGetValue(config, out var pool))
+        {
+            pool = new ProjectilePool(config.prefab, defaultPoolSize);
+            pools[config] = pool;
+        }
+
+        
         ProjectileRuntimeStats stats = new ProjectileRuntimeStats
         {
-            
-            speed = config.speed, //* owner.GetStat(StatType.ProjectileSpeed),
-            maxDistance = config.maxDistance, //* owner.GetStat(StatType.Range),
-            damage = config.damage, //* owner.GetStat(StatType.DamageMultiplier),
-            lifetime = config.lifetime //* owner.GetStat(StatType.ProjectileLifetime)
-            
+            speed = config.speed,
+            maxDistance = config.maxDistance,
+            damage = config.damage,
+            lifetime = config.lifetime
         };
 
         
-        Projectile p = pool.Get();
-        p.transform.position = position;
-        p.Init(config, direction, stats, source);
+        Projectile projectile = pool.Get();
+        projectile.transform.position = position;
+
+        
+        projectile.Init(config, direction, stats, source);
     }
 }

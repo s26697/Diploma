@@ -21,11 +21,12 @@ public class Projectile : MonoBehaviour
 
     public System.Action<Projectile> OnDespawn;
 
-    
+    private Collider2D col;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         executor = GetComponent<EffectExecutor>();
     }
 
@@ -44,12 +45,19 @@ public class Projectile : MonoBehaviour
         rb.linearVelocity = this.direction * stats.speed;
     }
 
-    
+    private void OnEnable()
+{
+    hasHit = false;
+    timeAlive = 0f;
+
+    rb.simulated = true;
+    col.enabled = true;
+}
+
 
     
-    private void Update()
+    private void FixedUpdate()
     {
-        
         CheckDespawnConditions();
         RotateToMovement();
     }
@@ -82,6 +90,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!rb.simulated) return;
         if (hasHit) return;
         if (other.gameObject == sourceGO) return;
 
@@ -93,8 +102,14 @@ public class Projectile : MonoBehaviour
     }
 
     private void Despawn()
-    {
-        rb.linearVelocity = Vector2.zero;
-        OnDespawn?.Invoke(this);
-    }
+{
+    hasHit = true;
+
+    rb.linearVelocity = Vector2.zero;
+    rb.simulated = false;     
+    col.enabled = false;      
+
+    OnDespawn?.Invoke(this);
+}
+
 }

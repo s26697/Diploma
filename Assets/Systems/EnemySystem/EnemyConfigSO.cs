@@ -8,10 +8,13 @@ public class EnemyConfigSO : ScriptableObject
 
      public float xpReward = 5;
 
-    [Header("AI")]
-    public float detectionRange = 6f;
+    [Header("ai stats")]
     public float attackRange = 1.3f;
-    public float attackCooldown = 1f;
+    public float onTriggerAttackCooldown = 1f;
+
+    [Header("AI")]
+    [SerializeReference]
+    public IEnemyStrategy strategy;
 
     [Header("Damage")]
     public float damage = 2f;

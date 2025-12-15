@@ -1,27 +1,21 @@
+using System;
 using UnityEngine;
 
-public class SwarmEnemyStrategy : IEnemyStrategy
+[Serializable]
+public sealed class SwarmEnemyStrategy : IEnemyStrategy
 {
-    private readonly Enemy _enemy;
-    private readonly Transform _target;
-
-    public SwarmEnemyStrategy(Enemy enemy, Transform target)
+    public void Tick(in EnemyContext ctx, float dt)
     {
-        _enemy = enemy;
-        _target = target;
-    }
-
-    public void Tick(float dt)
-    {
-        if (_target == null)
+        if (ctx.Target == null)
         {
-            _enemy.StopMoving();
+            ctx.Enemy.StopMoving();
             return;
         }
 
-        Vector2 direction = (_target.position - _enemy.transform.position).normalized;
-        float speed = _enemy.Stats.GetStat(StatType.MoveSpeed);
+        Vector2 dir =
+            (ctx.Target.position - ctx.Enemy.transform.position).normalized;
 
-        _enemy.Move(direction * speed);
+        float speed = ctx.Stats.GetStat(StatType.MoveSpeed);
+        ctx.Enemy.Move(dir * speed);
     }
 }

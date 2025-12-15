@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 2078731809829376517}
   - component: {fileID: 7053819604233715392}
   - component: {fileID: 4018027696310418678}
-  m_Layer: 0
+  - component: {fileID: 8037039536710232656}
+  m_Layer: 7
   m_Name: 'TestENemyPrefab '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,6 +40,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4909379258032037538
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -84,6 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e5313c4867844fd4e82837f347038f40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -93,7 +96,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &6516658176594302019
 Rigidbody2D:
@@ -205,3 +207,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.866452, y: 0.9298307}
   m_EdgeRadius: 0
+--- !u!114 &8037039536710232656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9046606746677448842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5a7546a7b181a7ea2783fe2ef4bdbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSystem
+  _weaponConfig: {fileID: 0}
+  _muzzle: {fileID: 0}

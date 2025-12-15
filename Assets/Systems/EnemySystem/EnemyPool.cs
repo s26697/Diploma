@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyPool
 {
-    private readonly Stack<Enemy> pool = new();
+    private readonly Queue<Enemy> pool = new();
     private readonly Enemy prefab;
     private readonly Transform parent;
 
@@ -17,7 +17,7 @@ public class EnemyPool
             var e = GameObject.Instantiate(prefab, parent);
             e.gameObject.SetActive(false);
             e.OnDespawn = ReturnToPool;
-            pool.Push(e);
+            pool.Enqueue(e);
         }
     }
 
@@ -30,12 +30,14 @@ public class EnemyPool
             return e;
         }
 
-        return pool.Pop();
+        var enemy = pool.Dequeue();
+        enemy.gameObject.SetActive(true);
+        return enemy;
     }
 
     private void ReturnToPool(Enemy e)
     {
         e.gameObject.SetActive(false);
-        pool.Push(e);
+        pool.Enqueue(e);
     }
 }

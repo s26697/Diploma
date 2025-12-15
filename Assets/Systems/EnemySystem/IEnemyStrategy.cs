@@ -1,4 +1,4 @@
 public interface IEnemyStrategy
 {
-    void Tick(float dt);
+    void Tick(in EnemyContext ctx, float dt);
 }

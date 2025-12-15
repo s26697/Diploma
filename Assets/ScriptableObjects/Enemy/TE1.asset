@@ -17,5 +17,13 @@ MonoBehaviour:
   detectionRange: 6
   attackRange: 1.3
   attackCooldown: 1
+  strategy:
+    rid: 7049027671214784602
   damage: 5
   startingStats: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 7049027671214784602
+      type: {class: SwarmEnemyStrategy, ns: , asm: Assembly-CSharp}
+      data: 

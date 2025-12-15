@@ -15,8 +15,8 @@ MonoBehaviour:
   enemies:
   - config: {fileID: 11400000, guid: 3e51e4da3070a68fcb2b57333e5b4fbc, type: 2}
     count: 11
-  - config: {fileID: 11400000, guid: 3e51e4da3070a68fcb2b57333e5b4fbc, type: 2}
-    count: 11
+  - config: {fileID: 11400000, guid: ab0216077837c940ea0a0b67d9194fa2, type: 2}
+    count: 4
   spawnInterval: 0.8
   timeToCOmplete: 20
   waitForClear: 1

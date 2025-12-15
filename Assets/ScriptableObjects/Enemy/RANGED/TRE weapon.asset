@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f456d67fe205b9b688c4fd0664f4ba7, type: 3}
+  m_Name: TRE weapon
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponConfigSO
+  baseAttackSpeed: 0.5
+  baseProjectiles: 1
+  baseAccuracy: 0.75
+  attackStrategy:
+    rid: 7049027671214784512
+  projectileConfig: {fileID: 11400000, guid: 26580c3bc15bc7e1c8966e19edcb9dce, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7049027671214784512
+      type: {class: StraightAttackStrategy, ns: , asm: Assembly-CSharp}
+      data:
+        maxSpreadAngle: 20.03
+        spawnSpacing: 0.15
