@@ -9,20 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984a77ce49b2fd023827925bbe7aba2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0347e0d02d307a14c99b7e526efe9af6, type: 3}
   m_Name: TE2
   m_EditorClassIdentifier: Assembly-CSharp::EnemyConfigSO
-  prefab: {fileID: 4681119290560834473, guid: b041b030240c37af38809f12f7228c75, type: 3}
-  xpReward: 4
+  prefab: {fileID: 8362603304085326862, guid: d0f961deaca1fdd448dabb561cf29cb2, type: 3}
+  xpReward: 7
   attackRange: 1.3
   onTriggerAttackCooldown: 1
   strategy:
-    rid: 7049027671214784603
-  damage: 10
-  startingStats: []
+    rid: 7063739097815973888
+  damage: 2
+  startingStats:
+  - {fileID: 11400000, guid: 2cde1c9fe1800904584ecb40fc822648, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 7049027671214784603
+    - rid: 7063739097815973888
       type: {class: SwarmEnemyStrategy, ns: , asm: Assembly-CSharp}
       data: 

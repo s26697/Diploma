@@ -14,6 +14,13 @@ public class WeaponSystem : MonoBehaviour
 
     private void Awake()
     {
+        if (_weaponConfig == null)
+        {
+            //Debug.LogWarning($"[{nameof(WeaponSystem)}] WeaponConfig is missing."); zeby enemy nie spamił
+            enabled = false; 
+            return;
+        }
+        
         _stats = GetComponent<IStatOwner>();
         _source = gameObject;
         _factory = new ProjectileFactory();

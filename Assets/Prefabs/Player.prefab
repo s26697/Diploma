@@ -89,7 +89,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,12 +112,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7451426116336585031, guid: 862923d4634e7c002b810d98877d3f55, type: 3}
+  m_Sprite: {fileID: -7451426116336585031, guid: 98515840d4470d043baceb234b042a69, type: 3}
   m_Color: {r: 0.8301887, g: 0.7871129, b: 0.7871129, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.45, y: 6.51}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -133,13 +133,13 @@ GameObject:
   - component: {fileID: 4130210247714543408}
   - component: {fileID: 1423212902127727393}
   - component: {fileID: 4454699199830284364}
-  - component: {fileID: 7704716902139054900}
   - component: {fileID: 5883233243679623350}
   - component: {fileID: 8105098799969750617}
   - component: {fileID: 7264251214975166352}
   - component: {fileID: 865566413989251517}
   - component: {fileID: 352121261817660837}
   - component: {fileID: 2992217839434359683}
+  - component: {fileID: 6457953028288202161}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 7017b12f655a382c4967fae2343a10f6, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 885bbda8cb5f2574ca2edc7bbfadc5c4, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -241,18 +241,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7704716902139054900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8642511180446704187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21e4f1e99ad814b968d72ee5a58a30a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!114 &5883233243679623350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,10 +250,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8642511180446704187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0adb4ec0c318165bb4e579fbfbfdf7c, type: 3}
+  m_Script: {fileID: 11500000, guid: e0ccdc20ae80f054b9080b39abe16326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatOwner
-  definition: {fileID: 11400000, guid: a95bb4e664bd8582391e0bf9aaa4c0b8, type: 2}
+  _weaponConfig: {fileID: 11400000, guid: 57b8f5a4c3cd15742aae91d52f59156e, type: 2}
+  _muzzle: {fileID: 5098266052896089585}
 --- !u!114 &8105098799969750617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,11 +264,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8642511180446704187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e5a7546a7b181a7ea2783fe2ef4bdbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e0c4225265b80e4eafa55842e06a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSystem
-  _weaponConfig: {fileID: 11400000, guid: 5ebb38a89cd80c0458d7e2d8aed5f93b, type: 2}
-  _muzzle: {fileID: 5098266052896089585}
+  definition: {fileID: 11400000, guid: 084a7a817e10e894dbcee830bd3de748, type: 2}
 --- !u!114 &7264251214975166352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8642511180446704187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 437c51622a58dcd2e9e3db8255e5681d, type: 3}
+  m_Script: {fileID: 11500000, guid: be41338eaafd31840991bb21a9bbef53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
 --- !u!61 &865566413989251517
@@ -347,7 +335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8642511180446704187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeaecfb3b61c5ce7e8bbc1a701b13c89, type: 3}
+  m_Script: {fileID: 11500000, guid: 4995534c3569f114a8732b32d2d88a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceHealth
 --- !u!61 &2992217839434359683
@@ -396,6 +384,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6457953028288202161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642511180446704187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948ea27e5fcc5b14d83a3d680b83d39f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &8666988415169486323
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -477,9 +477,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1259905345474778919, guid: 17d7cea498d6efa468793020b749db37, type: 3}
+  m_Sprite: {fileID: -1259905345474778919, guid: 304e927bc45091c468d39373af71a5a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -498,7 +498,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8666988415169486323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd712a7a09cd1af3cb08760955f5c548, type: 3}
+  m_Script: {fileID: 11500000, guid: 16acacd3a83a46a4ab52b245a647ee66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTowardsCursor
   muzzle: {fileID: 5098266052896089585}

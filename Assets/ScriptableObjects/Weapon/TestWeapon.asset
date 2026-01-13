@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f456d67fe205b9b688c4fd0664f4ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: d9587e015e075f94fb907590f253a2ad, type: 3}
   m_Name: TestWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponConfigSO
   baseAttackSpeed: 1
   baseProjectiles: 1
-  baseAccuracy: 0.8
+  baseAccuracy: 1
   attackStrategy:
-    rid: 7049027666281234520
-  projectileConfig: {fileID: 11400000, guid: 1a80f80508763dffe9c17c5c8c2f9b50, type: 2}
+    rid: 7063739097815973896
+  projectileConfig: {fileID: 11400000, guid: 174b7ebb9da3084478b60b0312aa3436, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 7049027666281234520
+    - rid: 7063739097815973896
       type: {class: StraightAttackStrategy, ns: , asm: Assembly-CSharp}
       data:
-        maxSpreadAngle: 14.45
-        spawnSpacing: 0.201
+        maxSpreadAngle: 15
+        spawnSpacing: 0.15

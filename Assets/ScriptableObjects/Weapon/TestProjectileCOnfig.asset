@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7843c81bb5fced2996c85b8345b2ef, type: 3}
+  m_Script: {fileID: 11500000, guid: fadbd463c19c88c44be680c8f08656e7, type: 3}
   m_Name: TestProjectileCOnfig
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileConfigSO
-  prefab: {fileID: -6601614521584323438, guid: 6944ffc403e6028f38681615b9bb3e7c, type: 3}
+  prefab: {fileID: -6601614521584323438, guid: 7e2e1714e11e01d49b929654d6945625, type: 3}
   speed: 20
-  lifetime: 1.5
-  damage: 3
-  maxDistance: 20
+  lifetime: 5
+  damage: 10
+  maxDistance: 25

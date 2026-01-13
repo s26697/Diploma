@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631734993fffb9daeb2a19d9d28b0cdb, type: 3}
+  m_Script: {fileID: 11500000, guid: b4304ddbec9ab8347966f7a2dd2d778d, type: 3}
   m_Name: AttackSpeed
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeDefinitionSO
-  UpgradeName: Attack Speed +
-  Description: Increases attack speed by 10%
-  Icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  UpgradeName: Attack Speed
+  Description: lineary increases rate of fire
+  Icon: {fileID: 0}
   TargetStat: 1
   Modifier:
-    Value: 0.1
+    Value: 0.2
     Type: 0

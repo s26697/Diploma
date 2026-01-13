@@ -41,18 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2734254952881317534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9ee459be4ca7447f8c611685e1f5b1d, type: 3}
+  m_Script: {fileID: 11500000, guid: ff8ffda4fe795b64aae13b1f2fdec536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  waves:
-  - {fileID: 11400000, guid: d021cab20a502ee67ae3240bcffce123, type: 2}
-  - {fileID: 11400000, guid: f11f619206d547249a90508b859cae58, type: 2}
-  - {fileID: 11400000, guid: 149c6b8c23c643ae58f7cdb8440f8aac, type: 2}
-  - {fileID: 11400000, guid: 25d99d0070b8c061cb8b84a174c20169, type: 2}
+  waves: []
   player: {fileID: 0}
-  mapMin: {x: -20, y: -15}
-  mapMax: {x: 20, y: 15}
-  minDistanceFromPlayer: 4
+  mapMin: {x: 0, y: 0}
+  mapMax: {x: 0, y: 0}
+  minDistanceFromPlayer: 5
 --- !u!1 &5955659074849370986
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,9 +91,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5955659074849370986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a903d33aae2d4744ca675d3172c9193f, type: 3}
+  m_Script: {fileID: 11500000, guid: 34888310c6d37d0479f5b3dbec7ae029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   waveManager: {fileID: 2213637960726977952}
   startDelay: 5
-  _gameplaymusic: {fileID: 11400000, guid: 36f222d04de3a8394a67b260108c5bec, type: 2}
+  _gameplaymusic: {fileID: 11400000, guid: 258f0594677cc264489384612a89daae, type: 2}

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7843c81bb5fced2996c85b8345b2ef, type: 3}
+  m_Script: {fileID: 11500000, guid: fadbd463c19c88c44be680c8f08656e7, type: 3}
   m_Name: Projetileconfig
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileConfigSO
-  prefab: {fileID: 7815780676338235316, guid: e114b3aca1455a4bba402f846eae4fbc, type: 3}
-  speed: 7
-  lifetime: 4
-  damage: 5
-  maxDistance: 15
+  prefab: {fileID: 6086355812602871055, guid: 4069e9a0578e06e47b68e8c97be59d43, type: 3}
+  speed: 10
+  lifetime: 2
+  damage: 10
+  maxDistance: 20

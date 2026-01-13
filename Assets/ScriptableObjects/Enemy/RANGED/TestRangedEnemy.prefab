@@ -96,7 +96,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,12 +119,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 97bb202e8bb99474bb55c7f220de4df0, type: 3}
+  m_Sprite: {fileID: -1630624418418028415, guid: 1bae61164981f3444bbe81bbbf159003, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.63, y: 0.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -165,10 +165,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3981281094591983141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0adb4ec0c318165bb4e579fbfbfdf7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e0c4225265b80e4eafa55842e06a3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatOwner
-  definition: {fileID: 11400000, guid: 9e7b9df3f05941d018005b2d95257c82, type: 2}
+  definition: {fileID: 11400000, guid: efaf5384292e52846ba4539ba983c1fb, type: 2}
 --- !u!114 &5759057356962727359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3981281094591983141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f93f8ebbf2519e0039931672ccc3cb32, type: 3}
+  m_Script: {fileID: 11500000, guid: 008d55e26820c284180ac6805e043060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
 --- !u!114 &3746545769428553528
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3981281094591983141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeaecfb3b61c5ce7e8bbc1a701b13c89, type: 3}
+  m_Script: {fileID: 11500000, guid: 4995534c3569f114a8732b32d2d88a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceHealth
 --- !u!61 &6055315504729610909
@@ -231,8 +231,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 0.63, y: 0.56}
+    newSize: {x: 0.63, y: 0.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -248,8 +248,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3981281094591983141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e5a7546a7b181a7ea2783fe2ef4bdbb, type: 3}
+  m_Script: {fileID: 11500000, guid: e0ccdc20ae80f054b9080b39abe16326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSystem
-  _weaponConfig: {fileID: 11400000, guid: 896f990714ec16fe2a21f9cb6b200fc0, type: 2}
+  _weaponConfig: {fileID: 11400000, guid: ac15dd4454a72c047958c98c9a9220c8, type: 2}
   _muzzle: {fileID: 4750940744577931096}

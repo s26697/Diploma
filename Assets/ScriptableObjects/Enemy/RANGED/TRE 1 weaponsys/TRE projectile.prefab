@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1563345746560340666}
   - component: {fileID: 3325204739401276714}
   - component: {fileID: 4915534778722167784}
-  - component: {fileID: 7815780676338235316}
   - component: {fileID: 8660064046760739288}
   - component: {fileID: 4806537069982326026}
+  - component: {fileID: 6086355812602871055}
   m_Layer: 9
   m_Name: TRE projectile
   m_TagString: Untagged
@@ -62,7 +62,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,18 +122,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7815780676338235316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223961977445910286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df5a9d9c53fafd58975e311a754e568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
 --- !u!61 &8660064046760739288
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -189,7 +177,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3223961977445910286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e32d29b45ccdcc8ad16a68154f6b85, type: 3}
+  m_Script: {fileID: 11500000, guid: 81fcd8002cb70e64e96c228997e16fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectExecutor
-  effectData: {fileID: 11400000, guid: 88698d814fc550600982ee1b811f04e8, type: 2}
+  effectData: {fileID: 11400000, guid: 0fb1dfb918d6472498dfb061036a55b8, type: 2}
+--- !u!114 &6086355812602871055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223961977445910286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6076d76876fc49bf5fe71c37d2158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Projectile
