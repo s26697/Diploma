@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         ChangeState(GameState.Playing);
+        Time.timeScale = 1f;
         AudioEvents.PlayMusic(_gameplaymusic.GetRandom());
         GameEvents.GameStarted();
     }
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
     private void HandlePlayerDied()
     {
         ChangeState(GameState.GameOver);
+        Time.timeScale = 0f;
         GameEvents.GameLost();
     }
 }
