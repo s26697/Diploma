@@ -6,7 +6,10 @@ public class WeaponConfigSO : ScriptableObject
     [Header("Visuals")]
     //public Sprite weaponSprite;
     //public RuntimeAnimatorController animatorController;
-
+    [Header("Audio")]
+    public AudioClip shootsound;
+    
+    
     [Header("Base Stats")]
     public float baseAttackSpeed = 1f; 
     public int baseProjectiles = 1;  

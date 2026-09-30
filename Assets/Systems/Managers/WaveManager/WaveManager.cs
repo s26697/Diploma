@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Systems.Managers.WaveManager;
 
 public class WaveManager : MonoBehaviour
 {
@@ -32,8 +34,11 @@ public class WaveManager : MonoBehaviour
             player,
             mapMin,
             mapMax,
-            minDistanceFromPlayer
+            minDistanceFromPlayer,
+            this
         );
+        
+        InitializeIndicatorPools();
     }
 
     private void OnEnable()
@@ -62,26 +67,32 @@ public class WaveManager : MonoBehaviour
     {
         for (int i = 0; i < waves.Length; i++)
         {
-            currentWave = i;
-            aliveEnemies = 0;
-            waveTimeExpired = false;
-
-            var wave = waves[i];
-            waveTimer = wave.timeToCOmplete;
-
-            GameEvents.WaveStarted(i);
-
-            
-            yield return StartCoroutine(spawnStrategy.ExecuteSpawn(wave));
-
-            
-            yield return new WaitUntil(() =>
-                aliveEnemies == 0 || waveTimeExpired
-            );
-
-            GameEvents.WaveCompleted(i);
+            SetupWave(i);
+            yield return StartCoroutine(spawnStrategy.ExecuteSpawn(waves[i]));
+            yield return new WaitUntil(() => WaveCompletedCondition());
+            CompleteWave(i);
         }
     }
+
+    private void SetupWave(int index)
+    {
+        currentWave = index;
+        aliveEnemies = 0;
+        waveTimeExpired = false;
+        waveTimer = waves[index].timeToCOmplete;
+        GameEvents.WaveStarted(index);
+    }
+
+    private bool WaveCompletedCondition()
+    {
+        return aliveEnemies == 0 || waveTimeExpired;
+    }
+
+    private void CompleteWave(int index)
+    {
+        GameEvents.WaveCompleted(index);
+    }
+
 
     private void WaveTimerTick()
     {
@@ -101,5 +112,32 @@ public class WaveManager : MonoBehaviour
     private void OnEnemyDied(Enemy e)
     {
         aliveEnemies--;
+    }
+    private void InitializeIndicatorPools()
+    {
+        foreach (var wave in waves)
+        {
+            foreach (var entry in wave.enemies)
+            {
+                var indicator = entry.config.spawnIndicator;
+                indicator?.InitPool(transform);
+            }
+        }
+    }
+    
+    public IEnumerator ShowIndicatorBatch(List<IEnumerator> indicatorCoroutines)
+    {
+        if (indicatorCoroutines == null || indicatorCoroutines.Count == 0)
+            yield break;
+        
+        List<Coroutine> running = new List<Coroutine>();
+
+        foreach (var c in indicatorCoroutines)
+        {
+            running.Add(StartCoroutine(c));
+        }
+        
+        foreach (var r in running)
+            yield return r;
     }
 }

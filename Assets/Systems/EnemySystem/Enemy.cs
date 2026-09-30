@@ -1,3 +1,4 @@
+using Systems.EnemySystem;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
     private Rigidbody2D rb;
     private ResourceHealth health;
     private WeaponSystem weapon;
+    private EnemyHitFeedback hitFeedback;
 
     public StatOwner Stats { get; private set; }
     public EnemyConfigSO Config { get; private set; }
@@ -28,6 +30,8 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
         Stats = GetComponent<StatOwner>();
         health = GetComponent<ResourceHealth>();
         weapon = GetComponent<WeaponSystem>();
+        hitFeedback = GetComponent<EnemyHitFeedback>();
+
 
         health.OnHealthZero += Die;
     }
@@ -37,6 +41,8 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
         Config = cfg;
 
         health.Init(() => Stats.GetStat(StatType.MaxHP));
+        hitFeedback?.Init(Config.hitAnimation);
+
 
         context = new EnemyContext(
             this,
@@ -63,6 +69,7 @@ public class Enemy : MonoBehaviour, IDamageable, IDamaging
 
     public void ApplyDamage(DamageInfo dmg)
     {
+        hitFeedback?.Play();
         health.ApplyDamage(dmg.Amount);
     }
 

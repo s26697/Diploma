@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileConfigSO
   prefab: {fileID: 6086355812602871055, guid: 4069e9a0578e06e47b68e8c97be59d43, type: 3}
   speed: 10
-  lifetime: 2
-  damage: 10
-  maxDistance: 20
+  lifetime: 3
+  damage: 9
+  maxDistance: 25

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DefaultWaveSpawnStrategy : IWaveSpawnStrategy
 {
@@ -9,36 +10,63 @@ public class DefaultWaveSpawnStrategy : IWaveSpawnStrategy
     private readonly Vector2 mapMax;
     private readonly float minDistanceFromPlayer;
     private readonly System.Action onEnemySpawned;
+    private readonly WaveManager waveManager;
 
     public DefaultWaveSpawnStrategy(
         EnemyFactory factory,
         Transform player,
         Vector2 mapMin,
         Vector2 mapMax,
-        float minDistanceFromPlayer)
+        float minDistanceFromPlayer,
+        WaveManager waveManager)
     {
         this.factory = factory;
         this.player = player;
         this.mapMin = mapMin;
         this.mapMax = mapMax;
         this.minDistanceFromPlayer = minDistanceFromPlayer;
+        this.waveManager = waveManager;
     }
 
     public IEnumerator ExecuteSpawn(WaveSO wave)
     {
         foreach (var entry in wave.enemies)
         {
-            for (int i = 0; i < entry.count; i++)
-            {
-                Vector2 spawnPos = GetRandomSpawnPosition();
-                factory.Spawn(entry.config, spawnPos, player);
-
-                GameEvents.EnemySpawned(entry.config.prefab);
-
-                yield return new WaitForSeconds(wave.spawnInterval);
-            }
+            Vector2[] spawnPositions = GenerateBatchPositions(entry.count);
+            var indicatorCoroutines = PrepareIndicatorCoroutines(entry.config, spawnPositions);
+            if (indicatorCoroutines.Count > 0) yield return waveManager.StartCoroutine(waveManager.ShowIndicatorBatch(indicatorCoroutines));
+            SpawnBatch(entry.config, spawnPositions);
+            
+            yield return new WaitForSeconds(wave.spawnInterval);
         }
     }
+    
+    private Vector2[] GenerateBatchPositions(int count)
+    {
+        var positions = new Vector2[count];
+        for (int i = 0; i < count; i++)
+            positions[i] = GetRandomSpawnPosition();
+        return positions;
+    }
+
+    private List<IEnumerator> PrepareIndicatorCoroutines(EnemyConfigSO config, Vector2[] positions)
+    {
+        var list = new List<IEnumerator>();
+        if (config.spawnIndicator is not null)
+            foreach (var pos in positions)
+                list.Add(config.spawnIndicator.Show(pos));
+        return list;
+    }
+    
+    private void SpawnBatch(EnemyConfigSO config, Vector2[] positions)
+    {
+        foreach (var pos in positions)
+        {
+            factory.Spawn(config, pos, player);
+            GameEvents.EnemySpawned(config.prefab);
+        }
+    }
+    
 
     private Vector2 GetRandomSpawnPosition()
     {

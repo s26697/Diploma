@@ -1,25 +1,44 @@
+using System;
+using UnityEngine;
+
 public class XPTracker
 {
-    private float xpToLevel;
+    public event Action<int> OnLevelUp; 
+
+    private float baseXpToLevel;
+    private float currentXpToLevel;
     private float currentXP;
     private int currentLevel;
 
-    public XPTracker(float xpToLevel)
+    private float levelMultiplier;
+
+    public XPTracker(float baseXpToLevel, float levelMultiplier = 1.25f)
     {
-        this.xpToLevel = xpToLevel;
+        this.baseXpToLevel = baseXpToLevel;
+        this.levelMultiplier = levelMultiplier;
+
+        currentXpToLevel = baseXpToLevel;
     }
 
-    
-    public bool AddXP(float amount)
+    public void AddXP(float amount)
     {
         currentXP += amount;
 
-        if (currentXP >= xpToLevel)
+        while (currentXP >= currentXpToLevel)
         {
-            currentXP -= xpToLevel;
-            currentLevel++;
-            return true;
+            currentXP -= currentXpToLevel;
+            LevelUp();
         }
-        return false;
     }
+
+    private void LevelUp()
+    {
+        currentLevel++;
+        currentXpToLevel = baseXpToLevel * Mathf.Pow(levelMultiplier, currentLevel);
+
+        OnLevelUp?.Invoke(currentLevel);
+    }
+
+    public int CurrentLevel => currentLevel;
+    
 }

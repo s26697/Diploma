@@ -29,11 +29,7 @@ public class Weapon
     if (_cooldown > 0f)
         return;
 
-    if (_config.attackStrategy == null)
-    {
-        Debug.LogWarning("Weapon has no attack strategy!");
-        return;
-    }
+    
 
     int projectileCount = GetProjectileCount();
     float accuracy = _config.baseAccuracy;
@@ -51,6 +47,9 @@ public class Weapon
 
     _config.attackStrategy.Attack(ctx);
     _cooldown = 1f / GetEffectiveAttackSpeed();
+    if (_config.shootsound) AudioEvents.PlaySfx(_config.shootsound);
+    
+        
 }
 
     private float GetEffectiveAttackSpeed()

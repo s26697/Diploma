@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StatDefinitionSO
   entries:
   - type: 0
-    baseValue: 8
+    baseValue: 6
   - type: 5
-    baseValue: 17
+    baseValue: 15
   - type: 3
     baseValue: 1
